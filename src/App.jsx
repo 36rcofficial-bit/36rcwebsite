@@ -13,7 +13,7 @@ const waLink = (text) =>
 const pad = (n) => String(n).padStart(2, '0')
 
 // Asli photo ho to photo, warna illustration. `parallax` diya to scroll pe halki movement.
-function Media({ image, scene, seed, withRoad, label, eager = false, parallax }) {
+function Media({ image, scene, seed, withRoad, label, eager = false, parallax, position }) {
   const props = parallax ? { 'data-parallax': parallax } : {}
   if (image) {
     return (
@@ -22,6 +22,7 @@ function Media({ image, scene, seed, withRoad, label, eager = false, parallax })
         src={image}
         alt={label}
         loading={eager ? 'eager' : 'lazy'}
+        style={position ? { objectPosition: position } : undefined}
         {...props}
       />
     )
@@ -148,28 +149,57 @@ function NextRideCard() {
   )
 }
 
+const SLIDE_MS = 6500
+
 function Hero() {
   const { u, tr } = useLang()
   const h = club.hero
+  const total = h.slides.length + 1
+  // ?slide=2 jaisa link kisi khaas slide se shuru karta hai
+  const [idx, setIdx] = useState(() => {
+    const n = Number(new URLSearchParams(window.location.search).get('slide'))
+    return Number.isInteger(n) && n > 0 && n < total ? n : 0
+  })
+
+  // Har slide SLIDE_MS tak; click karne pe timer wahi se dobara
+  useEffect(() => {
+    // Intro chal raha ho to pehli slide utni der aur rukti hai
+    const extra = document.documentElement.classList.contains('has-intro') ? 4000 : 0
+    const id = setTimeout(() => setIdx((i) => (i + 1) % total), SLIDE_MS + extra)
+    return () => clearTimeout(id)
+  }, [idx, total])
+
+  const captions = [{ en: 'Dust, dirt and the open road', hi: 'Dhool, mitti aur khuli sadak' }, ...h.slides.map((s) => s.caption)]
+
   return (
-    <section className="hero" id="top">
-      {/* Layer 1: photo */}
-      <div className="hero-stage hero-bg" data-parallax="0.3">
-        <picture>
-          <source srcSet={`${h.image}.webp`} type="image/webp" />
-          <img src={`${h.image}.jpg`} alt="" fetchPriority="high" />
-        </picture>
+    <section className="hero" id="top" data-slide={idx}>
+      {/* Slide 0: photo → bada 36RC → kata hua rider (rider naam ke aage) */}
+      <div className={`hero-slide ${idx === 0 ? 'is-active' : ''}`}>
+        <div className="hero-stage hero-bg" data-parallax="0.3">
+          <picture>
+            <source srcSet={`${h.image}.webp`} type="image/webp" />
+            <img src={`${h.image}.jpg`} alt="" fetchPriority="high" />
+          </picture>
+        </div>
+        <p className="hero-word" data-parallax="0.12" aria-hidden="true">{club.name}</p>
+        <div className="hero-stage hero-rider" data-parallax="0.3">
+          <picture>
+            <source srcSet={`${h.rider}.webp`} type="image/webp" />
+            <img src={`${h.rider}.png`} alt="Rider charging through dust on a dirt bike" fetchPriority="high" />
+          </picture>
+        </div>
       </div>
-      {/* Layer 2: bada naam, rider ke peeche */}
-      <p className="hero-word" data-parallax="0.12" aria-hidden="true">{club.name}</p>
-      {/* Layer 3: wahi rider, kata hua, naam ke aage */}
-      <div className="hero-stage hero-rider" data-parallax="0.3">
-        <picture>
-          <source srcSet={`${h.rider}.webp`} type="image/webp" />
-          <img src={`${h.rider}.png`} alt="Rider charging through dust on a dirt bike" fetchPriority="high" />
-        </picture>
-      </div>
-      {/* Layer 4: orange-teal grade aur text ke liye shade */}
+
+      {/* Baaki slides: club ki asli photos, halka zoom ke saath */}
+      {h.slides.map((s, i) => (
+        <div key={s.image} className={`hero-slide hero-photo ${idx === i + 1 ? 'is-active' : ''}`} aria-hidden={idx !== i + 1}>
+          <div className="hero-stage" data-parallax="0.3">
+            <img src={s.image} alt={tr(s.caption)} style={{ objectPosition: s.position }} loading={i === 0 ? 'eager' : 'lazy'} />
+          </div>
+        </div>
+      ))}
+
+      {/* Orange-teal grade aur text ke liye shade */}
       <div className="hero-grade" />
       <div className="hero-shade" />
 
@@ -202,10 +232,25 @@ function Hero() {
         </div>
       </div>
 
-      <a href="#about" className="scroll-cue hero-in" style={{ '--d': '1.1s' }} aria-label="Scroll down">
-        <span>{u.scroll}</span>
-        <i />
-      </a>
+      <div className="hero-dots hero-in" style={{ '--d': '1.1s' }}>
+        <p className="hero-caption" aria-live="polite">
+          <span>{pad(idx + 1)} / {pad(total)}</span> {tr(captions[idx])}
+        </p>
+        <div className="hero-bars" role="tablist" aria-label="Hero slides">
+          {captions.map((c, i) => (
+            <button
+              key={i}
+              role="tab"
+              aria-selected={idx === i}
+              aria-label={tr(c)}
+              className={idx === i ? 'is-active' : i < idx ? 'is-done' : ''}
+              onClick={() => setIdx(i)}
+            >
+              <span style={{ animationDuration: `${SLIDE_MS}ms` }} />
+            </button>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
@@ -345,10 +390,10 @@ function Journal() {
         <div className="journal">
           {club.journal.map((j, i) => (
             <figure key={j.image + i} className={`journal-item j-${i}`} data-reveal="zoom" style={{ '--d': `${(i % 3) * 0.08}s` }}>
-              <Media image={j.image} scene={j.scene} seed={i + 21} label={tr(j.title)} parallax="0.08" />
+              <Media image={j.image} scene={j.scene} seed={i + 21} label={tr(j.title)} parallax="0.08" position={j.position} />
               <figcaption>
                 <strong>{tr(j.title)}</strong>
-                <span>{j.meta}</span>
+                <span>{tr(j.meta)}</span>
               </figcaption>
             </figure>
           ))}
@@ -402,7 +447,7 @@ function Join() {
   return (
     <section className="join" id="join">
       <div className="join-media">
-        <Media image={club.joinImage} scene="night" seed={5} label="Rider with a motorcycle in the hills" parallax="0.2" />
+        <Media image={club.joinImage} scene="night" seed={5} label="36RC crew with their bikes" parallax="0.2" position="50% 40%" />
       </div>
       <div className="wrap join-grid">
         <div className="join-copy">

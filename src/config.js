@@ -27,6 +27,12 @@ export const club = {
     // Background photo aur usi photo se kata hua rider (rider bada "36RC" ke aage dikhta hai)
     image: '/images/hero-bg',
     rider: '/images/hero-rider',
+    // Hero carousel: pehli slide upar wali motocross photo hai, uske baad ye club ki photos
+    slides: [
+      { image: '/images/club-start.webp', caption: { en: 'CGRM 2024 · Dirt track start', hi: 'CGRM 2024 · Dirt track start' }, position: '50% 45%' },
+      { image: '/images/club-startline.webp', caption: { en: 'Riders on the start line', hi: 'Start line pe riders' }, position: '50% 50%' },
+      { image: '/images/club-drift.webp', caption: { en: 'Kicking up dust at CGRM', hi: 'CGRM me dhool udate hue' }, position: '55% 45%' },
+    ],
   },
 
   // Agli ride: hero ke card me dikhti hai. Countdown `start` tak chalta hai (Indian time).
@@ -50,7 +56,7 @@ export const club = {
   ],
 
   // Join section ke peeche wali photo
-  joinImage: '/images/amarkantak.jpg',
+  joinImage: '/images/club-team.webp',
 
   about: {
     // Club ki apni photo: helmet pe 36RC ride stickers
@@ -133,11 +139,11 @@ export const club = {
   ],
 
   journal: [
-    { title: { en: 'Keshkal ghaat climb', hi: 'Keshkal ghaat ki chadhai' }, meta: 'Jun 2026 · 340 km', scene: 'ghaat', image: '/images/ghaat-road.jpg' },
-    { title: { en: 'Dirt trail to Sirpur', hi: 'Sirpur ka kachcha raasta' }, meta: 'Oct 2026 · 180 km', scene: 'forest', image: '/images/offroad.jpg' },
-    { title: { en: 'Misty morning, Mainpat', hi: 'Mainpat ki dhundh bhari subah' }, meta: 'Sep 2026 · 680 km', scene: 'dawn', image: '/images/champaran.jpg' },
-    { title: { en: 'Chitrakote in full flow', hi: 'Chitrakote poore uphaan pe' }, meta: 'Jul 2026 · 560 km', scene: 'waterfall', image: '/images/chitrakote.jpg' },
-    { title: { en: 'Camp night near Jagdalpur', hi: 'Jagdalpur ke paas camp night' }, meta: 'Aug 2026 · 2 days', scene: 'night', image: '/images/camping.jpg' },
+    { title: { en: 'The 36RC family at CGRM night', hi: 'CGRM ki raat, 36RC family' }, meta: 'CGRM 2024', scene: 'night', image: '/images/club-night.webp' },
+    { title: { en: 'Over the mound', hi: 'Mitti ke dher ke upar' }, meta: { en: 'CGRM 2024 · Off-road', hi: 'CGRM 2024 · Off-road' }, scene: 'ghaat', image: '/images/club-mound.webp' },
+    { title: { en: 'Crew on the ground', hi: 'Ground pe hamari crew' }, meta: 'CGRM 2024', scene: 'forest', image: '/images/club-team.webp', position: '50% 40%' },
+    { title: { en: 'Chhattisgarh Riders Meet 2024', hi: 'Chhattisgarh Riders Meet 2024' }, meta: { en: 'Riders from across the state', hi: 'Poore state ke riders' }, scene: 'sunset', image: '/images/club-cgrm.webp', position: '50% 35%' },
+    { title: { en: 'On stage, together', hi: 'Stage pe, sab saath' }, meta: 'CGRM 2024', scene: 'night', image: '/images/club-stage.webp', position: '50% 70%' },
   ],
 
   // Season ke top riders (km ke hisaab se)

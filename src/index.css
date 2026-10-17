@@ -184,7 +184,7 @@ img { max-width: 100%; display: block; }
   position: relative; z-index: 5;
   display: flex; justify-content: space-between; align-items: flex-end;
   gap: 2rem 3rem; flex-wrap: wrap;
-  padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+  padding-bottom: clamp(4.5rem, 9vh, 6rem);
 }
 .hero-club {
   display: flex; align-items: center; gap: 0.75rem;
@@ -217,6 +217,37 @@ img { max-width: 100%; display: block; }
 .scroll-cue i { display: block; width: 1px; height: 42px; background: rgba(255, 255, 255, 0.25); position: relative; overflow: hidden; }
 .scroll-cue i::after { content: ''; position: absolute; left: 0; top: -50%; width: 1px; height: 50%; background: #fff; animation: drip 2s var(--ease) infinite; }
 @keyframes drip { to { top: 100%; } }
+
+/* Hero carousel */
+.hero-slide { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity 1.4s var(--ease); }
+.hero-slide.is-active { opacity: 1; }
+.hero-photo .hero-stage img { width: 100%; height: 100%; object-fit: cover; }
+.hero-photo.is-active .hero-stage img { animation: kenBurns 9s ease-out both; }
+@keyframes kenBurns { from { transform: scale(1.12); } to { transform: scale(1); } }
+.hero-grade { transition: opacity 1.4s var(--ease); }
+.hero:not([data-slide='0']) .hero-grade { opacity: 0.35; }
+.hero-shade::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(6, 14, 13, 0.7) 0%, rgba(6, 14, 13, 0.25) 45%, rgba(6, 14, 13, 0) 60%, rgba(6, 14, 13, 0.35) 100%);
+  opacity: 0; transition: opacity 1.4s var(--ease);
+}
+.hero:not([data-slide='0']) .hero-shade::after { opacity: 1; }
+
+.hero-dots {
+  position: absolute; z-index: 6; bottom: 1.4rem;
+  right: max(24px, calc((100vw - 1280px) / 2 + 24px));
+  display: grid; justify-items: end; gap: 0.5rem;
+  width: min(380px, 40vw);
+}
+.hero-caption { font-size: 0.74rem; font-weight: 500; color: rgba(255, 255, 255, 0.8); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.hero-caption span { font-family: var(--display); font-weight: 800; letter-spacing: 0.08em; color: var(--accent); margin-right: 0.4rem; }
+.hero-bars { display: flex; gap: 0.4rem; width: 100%; }
+.hero-bars button { flex: 1; height: 14px; padding: 6px 0; background: none; border: 0; cursor: pointer; }
+.hero-bars button::before { content: ''; display: block; height: 2px; background: rgba(255, 255, 255, 0.28); border-radius: 2px; }
+.hero-bars span { display: block; height: 2px; margin-top: -2px; background: #fff; border-radius: 2px; transform-origin: left; transform: scaleX(0); }
+.hero-bars .is-done span { transform: scaleX(1); }
+.hero-bars .is-active span { animation: barFill linear both; }
+@keyframes barFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* Next ride card (hero ke upar right me) */
 .hero-top {
@@ -547,6 +578,10 @@ img { max-width: 100%; display: block; }
   .hero { padding-top: 96px; }
   .hero-top { position: relative; top: auto; order: 2; justify-content: flex-start; padding-bottom: 2.5rem; }
   .ride-card { width: 100%; max-width: 420px; }
+  .hero-inner { padding-bottom: 2.5rem; }
+  .hero-dots { position: relative; right: auto; bottom: auto; order: 3; width: auto; justify-items: start; margin: 0 max(24px, env(safe-area-inset-left, 0px)) 2rem; }
+  .hero-caption { text-align: left; }
+  .hero-bars { width: 200px; }
   .scroll-cue { display: none; }
   .hero { height: auto; min-height: min(100svh, 860px); }
   .hero-word { top: 16%; font-size: 40vw; }
