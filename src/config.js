@@ -5,7 +5,7 @@
 
 export const club = {
   name: '36RC',
-  fullName: '36 Riders Club',
+  fullName: 'Chhattisgarh Riding Club',
   city: 'Raipur, Chhattisgarh',
   season: 2026,
 
@@ -17,7 +17,7 @@ export const club = {
   instagramHandle: '@36rcofficial',
 
   hero: {
-    eyebrow: 'Motorcycle touring club · Chhattisgarh',
+    eyebrow: 'Chhattisgarh Riding Club',
     title: ['Never', 'stop', 'exploring'],
     text: 'Chhattisgarh ka riders club. Ghaat, jungle aur waterfall routes pe weekend rides, safety-first group riding aur ek family jo saath chalti hai.',
     // Background photo aur usi photo se kata hua rider (rider bada "36RC" ke aage dikhta hai)

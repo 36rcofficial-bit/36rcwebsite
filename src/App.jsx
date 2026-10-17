@@ -137,13 +137,19 @@ function Hero() {
       <div className="hero-shade" />
 
       <div className="wrap hero-inner">
-        <h1 className="display hero-title">
-          {h.title.map((line, i) => (
-            <span key={i} className="line">
-              <span className="line-inner" style={{ '--d': `${0.35 + i * 0.1}s` }}>{line}</span>
-            </span>
-          ))}
-        </h1>
+        <div className="hero-copy">
+          <p className="hero-club hero-in" style={{ '--d': '0.2s' }}>
+            <span className="hero-club-mark" aria-hidden="true" />
+            {h.eyebrow}
+          </p>
+          <h1 className="display hero-title">
+            {h.title.map((line, i) => (
+              <span key={i} className="line">
+                <span className="line-inner" style={{ '--d': `${0.35 + i * 0.1}s` }}>{line}</span>
+              </span>
+            ))}
+          </h1>
+        </div>
         <div className="hero-side hero-in" style={{ '--d': '0.8s' }}>
           <p className="hero-text">{h.text}</p>
           <div className="hero-actions">

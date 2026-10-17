@@ -1,4 +1,4 @@
-# 36RC – 36 Riders Club website
+# 36RC – Chhattisgarh Riding Club website
 
 React + Vite landing page.
 
