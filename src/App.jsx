@@ -27,6 +27,23 @@ function Media({ image, scene, seed, withRoad, label, eager = false, parallax })
   return <Scene scene={scene} seed={seed} withRoad={withRoad} />
 }
 
+// Club logo. tone="light" = safed 36 (dark background ke liye), "dark" = kaala 36 (light background ke liye)
+function Logo({ tone = 'light', className = '', eager = false, decorative = false }) {
+  const src = `/images/logo-${tone}`
+  return (
+    <picture className={className}>
+      <source srcSet={`${src}.webp`} type="image/webp" />
+      <img
+        src={`${src}.png`}
+        alt={decorative ? '' : club.fullName}
+        width="900"
+        height="224"
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </picture>
+  )
+}
+
 const icons = {
   shield: <path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z M9 12l2 2 4-4" />,
   route: <path d="M6 19a2 2 0 100-4 2 2 0 000 4zM18 9a2 2 0 100-4 2 2 0 000 4zM6 15V9a4 4 0 014-4h2M18 9v6a4 4 0 01-4 4h-2" />,
@@ -57,8 +74,7 @@ function Header() {
     <header className={cls.join(' ')}>
       <div className="wrap header-inner">
         <a href="#top" className="brand" aria-label={`${club.fullName} home`}>
-          <span className="brand-mark">{club.name}</span>
-          <span className="brand-sub">Riders Club</span>
+          <Logo className="brand-logo" eager />
         </a>
         <nav className="header-links">
           {links.map(([href, label]) => (
@@ -108,7 +124,9 @@ function Hero() {
         </picture>
       </div>
       {/* Layer 2: bada naam, rider ke peeche */}
-      <p className="hero-word" data-parallax="0.12" aria-hidden="true">{club.name}</p>
+      <div className="hero-word" data-parallax="0.12" aria-hidden="true">
+        <Logo eager decorative />
+      </div>
       {/* Layer 3: wahi rider, kata hua, naam ke aage */}
       <div className="hero-stage hero-rider" data-parallax="0.3">
         <picture>
@@ -449,7 +467,9 @@ function Footer() {
         </nav>
       </div>
       <div className="wrap">
-        <p className="footer-word" aria-hidden="true">{club.name}</p>
+        <div className="footer-word" aria-hidden="true">
+          <Logo decorative />
+        </div>
       </div>
       <div className="wrap footer-bottom">
         <span>© {year} {club.fullName} · {club.city}</span>
