@@ -10,9 +10,9 @@ const waLink = (text) =>
 const pad = (n) => String(n).padStart(2, '0')
 
 // Asli photo ho to photo, warna illustration
-function Media({ image, scene, seed, withRoad, label }) {
+function Media({ image, scene, seed, withRoad, label, eager = false }) {
   if (image) {
-    return <img className="media-img" src={image} alt={label} loading="lazy" />
+    return <img className="media-img" src={image} alt={label} loading={eager ? 'eager' : 'lazy'} />
   }
   return <Scene scene={scene} seed={seed} withRoad={withRoad} />
 }
@@ -97,7 +97,7 @@ function Hero() {
   return (
     <section className="hero" id="top">
       <div className="hero-media">
-        <Media image={h.image} scene="sunset" seed={3} withRoad label={club.fullName} />
+        <Media image={h.image} scene="sunset" seed={3} withRoad label="36RC riders on a mountain road" eager />
       </div>
       <div className="hero-shade" />
       <div className="wrap hero-inner">
@@ -296,7 +296,7 @@ function Join() {
   return (
     <section className="join" id="join">
       <div className="join-media">
-        <Scene scene="night" seed={5} />
+        <Media image="/images/camping.jpg" scene="night" seed={5} label="Motorcycle camp in the hills" />
       </div>
       <div className="wrap join-grid">
         <div className="join-copy">
@@ -364,7 +364,10 @@ function Footer() {
           <a href={club.instagram} target="_blank" rel="noreferrer">Instagram</a>
         </nav>
       </div>
-      <div className="wrap footer-bottom">© {year} {club.fullName}. Ride safe, always.</div>
+      <div className="wrap footer-bottom">
+        <span>© {year} {club.fullName}. Ride safe, always.</span>
+        <span>Photos: Freepik</span>
+      </div>
     </footer>
   )
 }

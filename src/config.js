@@ -20,7 +20,7 @@ export const club = {
     eyebrow: 'Motorcycle touring club · Chhattisgarh',
     title: ['Ride beyond', 'the map.'],
     text: 'Ghaat, jungle aur waterfall routes pe weekend rides. Planned routes, safety-first group riding aur ek riders family jo saath chalti hai.',
-    image: '',
+    image: '/images/hero.jpg',
   },
 
   stats: [
@@ -70,6 +70,7 @@ export const club = {
       days: 1,
       level: 'Easy',
       scene: 'dawn',
+      image: '/images/champaran.jpg',
     },
     {
       date: '08–09 Nov',
@@ -79,6 +80,7 @@ export const club = {
       days: 2,
       level: 'Moderate',
       scene: 'waterfall',
+      image: '/images/chitrakote.jpg',
     },
     {
       date: '23 Nov',
@@ -88,6 +90,7 @@ export const club = {
       days: 1,
       level: 'Moderate',
       scene: 'ghaat',
+      image: '/images/ghaat-road.jpg',
     },
     {
       date: '13–14 Dec',
@@ -97,15 +100,16 @@ export const club = {
       days: 2,
       level: 'Hard',
       scene: 'forest',
+      image: '/images/amarkantak.jpg',
     },
   ],
 
   journal: [
-    { title: 'Mainpat plateau run', meta: 'Sep 2026 · 680 km', scene: 'sunset' },
-    { title: 'Monsoon ride to Sirpur', meta: 'Oct 2026 · 180 km', scene: 'forest' },
-    { title: 'Night halt at Jagdalpur', meta: 'Aug 2026 · 2 days', scene: 'night' },
-    { title: 'Chitrakote in full flow', meta: 'Jul 2026 · 560 km', scene: 'waterfall' },
-    { title: 'Sunrise at Keshkal', meta: 'Jun 2026 · 340 km', scene: 'dawn' },
+    { title: 'Mainpat plateau run', meta: 'Sep 2026 · 680 km', scene: 'sunset', image: '/images/sunset.jpg' },
+    { title: 'Dirt trail to Sirpur', meta: 'Oct 2026 · 180 km', scene: 'forest', image: '/images/offroad.jpg' },
+    { title: 'Keshkal ghaat climb', meta: 'Jun 2026 · 340 km', scene: 'dawn', image: '/images/ghaat-road.jpg' },
+    { title: 'Chitrakote in full flow', meta: 'Jul 2026 · 560 km', scene: 'waterfall', image: '/images/chitrakote.jpg' },
+    { title: 'Camp night near Jagdalpur', meta: 'Aug 2026 · 2 days', scene: 'night', image: '/images/camping.jpg' },
   ],
 
   // Season ke top riders (km ke hisaab se)

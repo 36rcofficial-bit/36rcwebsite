@@ -130,8 +130,9 @@ img { max-width: 100%; display: block; }
 .hero-shade {
   position: absolute; inset: 0;
   background:
-    linear-gradient(90deg, rgba(20, 14, 10, 0.72) 0%, rgba(20, 14, 10, 0.25) 55%, rgba(20, 14, 10, 0) 80%),
-    linear-gradient(0deg, rgba(20, 14, 10, 0.75) 0%, rgba(20, 14, 10, 0) 40%);
+    linear-gradient(90deg, rgba(20, 14, 10, 0.8) 0%, rgba(20, 14, 10, 0.4) 50%, rgba(20, 14, 10, 0.1) 80%),
+    linear-gradient(0deg, rgba(20, 14, 10, 0.85) 0%, rgba(20, 14, 10, 0) 45%),
+    linear-gradient(180deg, rgba(20, 14, 10, 0.55) 0%, rgba(20, 14, 10, 0) 25%);
 }
 .hero-inner {
   position: relative;
@@ -282,7 +283,7 @@ img { max-width: 100%; display: block; }
 /* Join */
 .join { position: relative; overflow: hidden; color: #fff; padding-block: clamp(4rem, 9vw, 7rem); background: var(--forest); }
 .join-media { position: absolute; inset: 0; opacity: 0.9; }
-.join::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 13, 24, 0.7), rgba(10, 13, 24, 0.2)); }
+.join::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18, 14, 10, 0.85), rgba(18, 14, 10, 0.35)); }
 .join-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 4rem; align-items: center; }
 .join-copy > p { color: rgba(255, 255, 255, 0.85); max-width: 46ch; margin-top: 1.2rem; font-size: 1.05rem; }
 .contact { list-style: none; display: grid; gap: 0.55rem; margin-top: 2rem; }
@@ -330,7 +331,11 @@ img { max-width: 100%; display: block; }
 .footer-grid { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; padding-bottom: 2rem; }
 .footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; font-weight: 500; }
 .footer-links a:hover { color: #ffb27e; }
-.footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.12); padding-block: 1.3rem; font-size: 0.85rem; }
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-block: 1.3rem; font-size: 0.85rem;
+  display: flex; justify-content: space-between; gap: 0.5rem 2rem; flex-wrap: wrap;
+}
 
 /* Responsive */
 @media (max-width: 1080px) {
