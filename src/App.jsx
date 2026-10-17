@@ -432,6 +432,13 @@ function Faq() {
 function Footer() {
   return (
     <footer className="footer">
+      <div className="footer-bg" data-parallax="0.15" aria-hidden="true">
+        <picture>
+          <source srcSet="/images/footer-forest.webp" type="image/webp" />
+          <img src="/images/footer-forest.jpg" alt="" loading="lazy" />
+        </picture>
+      </div>
+      <div className="footer-shade" aria-hidden="true" />
       <div className="wrap footer-grid">
         <p className="footer-tag">Ride safe. Ride together. Ride far.</p>
         <nav className="footer-links">
