@@ -11,10 +11,10 @@ html.has-intro, html.has-intro body { overflow: hidden; }
 html.has-intro .hero,
 html.has-intro .hero * { animation-play-state: paused !important; }
 
-.intro-center { display: grid; justify-items: center; gap: 1.1rem; width: min(78vw, 460px); }
+.intro-center { display: grid; justify-items: center; gap: 0.9rem; width: min(56vw, 250px); }
 
 /* Rider silhouette: bas halka fade + upar */
-.intro-rider { display: block; width: 34%; opacity: 0; animation: introFade 1s var(--ease) 0.15s both; }
+.intro-rider { display: block; width: 40%; opacity: 0; animation: introFade 1s var(--ease) 0.15s both; }
 .intro-rider img { display: block; width: 100%; height: auto; opacity: 0.9; }
 
 /* Logo: neeche se mask ke andar se upar aata hai */
@@ -28,8 +28,8 @@ html.has-intro .hero * { animation-play-state: paused !important; }
 @keyframes lineDraw { to { transform: scaleX(1); } }
 
 .intro-tag {
-  font-size: 0.68rem; font-weight: 500;
-  letter-spacing: 0.5em; text-transform: uppercase;
+  font-size: 0.6rem; font-weight: 500;
+  letter-spacing: 0.42em; text-transform: uppercase; white-space: nowrap;
   padding-left: 0.5em;
   color: rgba(255, 255, 255, 0.6);
   animation: introFade 1s var(--ease) 1.1s both;
