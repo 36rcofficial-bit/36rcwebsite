@@ -18,7 +18,7 @@ export const club = {
 
   hero: {
     eyebrow: 'Motorcycle touring club · Chhattisgarh',
-    title: ['Ride', 'beyond', 'the map'],
+    title: ['Never', 'stop', 'exploring'],
     text: 'Chhattisgarh ka riders club. Ghaat, jungle aur waterfall routes pe weekend rides, safety-first group riding aur ek family jo saath chalti hai.',
     // Background photo aur usi photo se kata hua rider (rider bada "36RC" ke aage dikhta hai)
     image: '/images/hero-bg',
