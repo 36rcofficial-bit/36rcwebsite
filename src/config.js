@@ -139,11 +139,11 @@ export const club = {
   ],
 
   journal: [
-    { title: { en: 'The 36RC family at CGRM night', hi: 'CGRM ki raat, 36RC family' }, meta: 'CGRM 2024', scene: 'night', image: '/images/club-night.webp' },
-    { title: { en: 'Over the mound', hi: 'Mitti ke dher ke upar' }, meta: { en: 'CGRM 2024 · Off-road', hi: 'CGRM 2024 · Off-road' }, scene: 'ghaat', image: '/images/club-mound.webp' },
-    { title: { en: 'Crew on the ground', hi: 'Ground pe hamari crew' }, meta: 'CGRM 2024', scene: 'forest', image: '/images/club-team.webp', position: '50% 40%' },
-    { title: { en: 'Chhattisgarh Riders Meet 2024', hi: 'Chhattisgarh Riders Meet 2024' }, meta: { en: 'Riders from across the state', hi: 'Poore state ke riders' }, scene: 'sunset', image: '/images/club-cgrm.webp', position: '50% 35%' },
-    { title: { en: 'On stage, together', hi: 'Stage pe, sab saath' }, meta: 'CGRM 2024', scene: 'night', image: '/images/club-stage.webp', position: '50% 70%' },
+    { title: { en: 'Keshkal ghaat climb', hi: 'Keshkal ghaat ki chadhai' }, meta: 'Jun 2026 · 340 km', scene: 'ghaat', image: '/images/ghaat-road.jpg' },
+    { title: { en: 'Dirt trail to Sirpur', hi: 'Sirpur ka kachcha raasta' }, meta: 'Oct 2026 · 180 km', scene: 'forest', image: '/images/offroad.jpg' },
+    { title: { en: 'Misty morning, Mainpat', hi: 'Mainpat ki dhundh bhari subah' }, meta: 'Sep 2026 · 680 km', scene: 'dawn', image: '/images/champaran.jpg' },
+    { title: { en: 'Chitrakote in full flow', hi: 'Chitrakote poore uphaan pe' }, meta: 'Jul 2026 · 560 km', scene: 'waterfall', image: '/images/chitrakote.jpg' },
+    { title: { en: 'Camp night near Jagdalpur', hi: 'Jagdalpur ke paas camp night' }, meta: { en: 'Aug 2026 · 2 days', hi: 'Aug 2026 · 2 din' }, scene: 'night', image: '/images/camping.jpg' },
   ],
 
 
