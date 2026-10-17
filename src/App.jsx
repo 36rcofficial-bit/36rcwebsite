@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { club } from './config.js'
 import Scene from './Scene.jsx'
+import Intro from './Intro.jsx'
+import { LangProvider, LangToggle, useLang } from './i18n.jsx'
 import { CountUp, useHeaderState, useReveal, useSmoothScroll } from './motion.jsx'
 
 const year = new Date().getFullYear()
@@ -28,18 +30,12 @@ function Media({ image, scene, seed, withRoad, label, eager = false, parallax })
 }
 
 // Club logo. tone="light" = safed 36 (dark background ke liye), "dark" = kaala 36 (light background ke liye)
-function Logo({ tone = 'light', className = '', eager = false, decorative = false }) {
+function Logo({ tone = 'light', className = '', eager = false }) {
   const src = `/images/logo-${tone}`
   return (
     <picture className={className}>
       <source srcSet={`${src}.webp`} type="image/webp" />
-      <img
-        src={`${src}.png`}
-        alt={decorative ? '' : club.fullName}
-        width="900"
-        height="224"
-        loading={eager ? 'eager' : 'lazy'}
-      />
+      <img src={`${src}.png`} alt={club.fullName} width="900" height="224" loading={eager ? 'eager' : 'lazy'} />
     </picture>
   )
 }
@@ -49,6 +45,8 @@ const icons = {
   route: <path d="M6 19a2 2 0 100-4 2 2 0 000 4zM18 9a2 2 0 100-4 2 2 0 000 4zM6 15V9a4 4 0 014-4h2M18 9v6a4 4 0 01-4 4h-2" />,
   people: <path d="M9 11a3 3 0 100-6 3 3 0 000 6zM17 11a2.5 2.5 0 100-5M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 14c2.8 0 5 2.2 5 5" />,
   arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
+  pin: <path d="M12 21s-7-6.2-7-11.5A7 7 0 0112 2.5a7 7 0 017 7C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />,
+  calendar: <path d="M4 6.5h16v13H4zM4 10.5h16M8.5 3.5v5M15.5 3.5v5" />,
 }
 
 function Icon({ name, className = 'icon' }) {
@@ -60,14 +58,15 @@ function Icon({ name, className = 'icon' }) {
 }
 
 function Header() {
+  const { u } = useLang()
   const { solid, hidden } = useHeaderState()
   const [open, setOpen] = useState(false)
   const links = [
-    ['#about', 'About'],
-    ['#routes', 'Routes'],
-    ['#journal', 'Journal'],
-    ['#riders', 'Riders'],
-    ['#faq', 'FAQ'],
+    ['#about', u.nav.about],
+    ['#routes', u.nav.routes],
+    ['#journal', u.nav.journal],
+    ['#riders', u.nav.riders],
+    ['#faq', u.nav.faq],
   ]
   const cls = ['header', solid || open ? 'header-solid' : '', hidden && !open ? 'header-hidden' : '']
   return (
@@ -81,14 +80,15 @@ function Header() {
             <a key={href} href={href}>{label}</a>
           ))}
         </nav>
-        <a href="#join" className="btn btn-light btn-sm header-cta">Join the club</a>
+        <LangToggle />
+        <a href="#join" className="btn btn-light btn-sm header-cta">{u.joinClub}</a>
         <button className="burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
           <span /><span />
         </button>
       </div>
       {open && (
         <nav className="drawer wrap">
-          {[...links, ['#join', 'Join the club']].map(([href, label]) => (
+          {[...links, ['#join', u.joinClub]].map(([href, label]) => (
             <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
           ))}
         </nav>
@@ -112,7 +112,44 @@ function useCountdown(target) {
   }
 }
 
+function NextRideCard() {
+  const { u, tr } = useLang()
+  const n = club.nextRide
+  const t = useCountdown(n.start)
+  return (
+    <aside className="ride-card hero-in" style={{ '--d': '1s' }} aria-labelledby="ride-card-title">
+      <div className="ride-card-head">
+        <span className="pulse" aria-hidden="true" />
+        <span>{u.nextRide}</span>
+      </div>
+      <h2 id="ride-card-title" className="ride-card-title">{n.title}</h2>
+      <ul className="ride-card-facts">
+        <li><Icon name="calendar" />{n.dates}</li>
+        <li><Icon name="pin" />{tr(n.distance)} · {n.days} {n.days > 1 ? u.daysWord : u.day}</li>
+      </ul>
+      <p className="ride-card-blurb">{tr(n.blurb)}</p>
+      <div className="ride-card-count" aria-label="Time left to flag off">
+        {[['days', u.days], ['hrs', u.hrs], ['mins', u.mins], ['secs', u.secs]].map(([k, l]) => (
+          <div key={k}>
+            <strong>{pad(t[k])}</strong>
+            <span>{l}</span>
+          </div>
+        ))}
+      </div>
+      <div className="ride-card-actions">
+        <a className="btn btn-accent btn-sm" href={waLink(u.rideJoinMsg(club.name, n.title, n.dates))} target="_blank" rel="noreferrer">
+          {u.countIn} <Icon name="arrow" className="btn-icon" />
+        </a>
+        <a className="btn btn-glass btn-sm" href={waLink(u.rideInfoMsg(club.name, n.title))} target="_blank" rel="noreferrer">
+          {u.details}
+        </a>
+      </div>
+    </aside>
+  )
+}
+
 function Hero() {
+  const { u, tr } = useLang()
   const h = club.hero
   return (
     <section className="hero" id="top">
@@ -136,6 +173,10 @@ function Hero() {
       <div className="hero-grade" />
       <div className="hero-shade" />
 
+      <div className="wrap hero-top">
+        <NextRideCard />
+      </div>
+
       <div className="wrap hero-inner">
         <div className="hero-copy">
           <p className="hero-club hero-in" style={{ '--d': '0.2s' }}>
@@ -151,67 +192,31 @@ function Hero() {
           </h1>
         </div>
         <div className="hero-side hero-in" style={{ '--d': '0.8s' }}>
-          <p className="hero-text">{h.text}</p>
+          <p className="hero-text">{tr(h.text)}</p>
           <div className="hero-actions">
             <a href="#join" className="btn btn-light">
-              Join the club <Icon name="arrow" className="btn-icon" />
+              {u.joinClub} <Icon name="arrow" className="btn-icon" />
             </a>
-            <a href="#routes" className="btn btn-teal">View rides</a>
+            <a href="#routes" className="btn btn-teal">{u.viewRides}</a>
           </div>
         </div>
       </div>
 
-      <a href="#next" className="scroll-cue hero-in" style={{ '--d': '1.1s' }} aria-label="Scroll down">
-        <span>Scroll</span>
+      <a href="#about" className="scroll-cue hero-in" style={{ '--d': '1.1s' }} aria-label="Scroll down">
+        <span>{u.scroll}</span>
         <i />
       </a>
     </section>
   )
 }
 
-function NextRide() {
-  const n = club.nextRide
-  const t = useCountdown(n.start)
-  return (
-    <section className="next" id="next" aria-labelledby="next-title">
-      <div className="wrap next-inner">
-        <div className="next-info" data-reveal>
-          <div className="next-head">
-            <span className="pulse" aria-hidden="true" />
-            <p className="next-label">Next ride</p>
-          </div>
-          <h2 id="next-title" className="next-title">{n.title}</h2>
-          <p className="next-route">{n.route} · Meet {n.meetPoint}</p>
-        </div>
-        <div className="countdown" data-reveal style={{ '--d': '0.1s' }} aria-label="Time left to flag off">
-          {[['days', 'Days'], ['hrs', 'Hours'], ['mins', 'Min'], ['secs', 'Sec']].map(([k, l]) => (
-            <div key={k}>
-              <strong>{pad(t[k])}</strong>
-              <span>{l}</span>
-            </div>
-          ))}
-        </div>
-        <a
-          className="btn btn-accent"
-          data-reveal
-          style={{ '--d': '0.2s' }}
-          href={waLink(`Hi ${club.name}! ${n.title} ke liye mera naam add kar do.`)}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Count me in <Icon name="arrow" className="btn-icon" />
-        </a>
-      </div>
-    </section>
-  )
-}
-
 function Stats() {
+  const { tr } = useLang()
   return (
     <dl className="stats-row">
       {club.stats.map((s, i) => (
-        <div key={s.label} data-reveal style={{ '--d': `${i * 0.08}s` }}>
-          <dt>{s.label}</dt>
+        <div key={s.value} data-reveal style={{ '--d': `${i * 0.08}s` }}>
+          <dt>{tr(s.label)}</dt>
           <dd><CountUp value={s.value} /></dd>
         </div>
       ))}
@@ -220,12 +225,13 @@ function Stats() {
 }
 
 function Marquee() {
+  const { u } = useLang()
   const places = [...new Set([...club.routes.map((r) => r.place), 'Mainpat', 'Sirpur', 'Bastar'])]
   const row = places.map((p) => (
     <span key={p} className="marquee-item">{p}<i aria-hidden="true">✦</i></span>
   ))
   return (
-    <div className="marquee" aria-label={`Places we ride: ${places.join(', ')}`}>
+    <div className="marquee" aria-label={`${u.placesWe}: ${places.join(', ')}`}>
       <div className="marquee-track" aria-hidden="true">
         {row}{row}
       </div>
@@ -234,21 +240,22 @@ function Marquee() {
 }
 
 function About() {
+  const { u, tr } = useLang()
   const a = club.about
   return (
     <section className="section" id="about">
       <div className="wrap about-grid">
         <div className="about-copy">
-          <p className="eyebrow" data-reveal>About {club.name}</p>
-          <h2 className="display h2" data-reveal>{a.title}</h2>
-          <p className="lead" data-reveal>{a.text}</p>
+          <p className="eyebrow" data-reveal>{u.about(club.name)}</p>
+          <h2 className="display h2" data-reveal>{tr(a.title)}</h2>
+          <p className="lead" data-reveal>{tr(a.text)}</p>
           <ul className="points">
             {a.points.map((p, i) => (
-              <li key={p.title} className="point" data-reveal style={{ '--d': `${i * 0.1}s` }}>
+              <li key={p.icon} className="point" data-reveal style={{ '--d': `${i * 0.1}s` }}>
                 <span className="point-icon"><Icon name={p.icon} /></span>
                 <div>
-                  <h3>{p.title}</h3>
-                  <p>{p.text}</p>
+                  <h3>{tr(p.title)}</h3>
+                  <p>{tr(p.text)}</p>
                 </div>
               </li>
             ))}
@@ -256,11 +263,15 @@ function About() {
         </div>
         <div className="about-visual" data-reveal="zoom">
           <div className="about-frame">
-            <Media image={club.about.image} scene="ghaat" seed={4} label="Rider on a ghaat road" parallax="0.12" />
+            <Media image={a.image} scene="ghaat" seed={4} label="36RC helmet with ride stickers" parallax="0.12" />
           </div>
+          <picture className="about-sticker" aria-hidden="true">
+            <source srcSet="/images/badge.webp" type="image/webp" />
+            <img src="/images/badge.png" alt="" loading="lazy" width="640" height="640" />
+          </picture>
           <div className="about-badge">
             <strong><CountUp value={club.stats[2].value} /></strong>
-            <span>{club.stats[2].label} together</span>
+            <span>km {u.together}</span>
           </div>
         </div>
       </div>
@@ -272,15 +283,16 @@ function About() {
 }
 
 function Routes() {
+  const { u, tr } = useLang()
   return (
     <section className="section section-sand" id="routes">
       <div className="wrap">
         <div className="section-head">
           <div>
-            <p className="eyebrow" data-reveal>Upcoming rides</p>
-            <h2 className="display h2" data-reveal>Routes this season</h2>
+            <p className="eyebrow" data-reveal>{u.upcoming}</p>
+            <h2 className="display h2" data-reveal>{u.routesTitle}</h2>
           </div>
-          <p className="section-note" data-reveal>Har ride se pehle WhatsApp group me poora plan, fuel stops aur stay details aati hain.</p>
+          <p className="section-note" data-reveal>{u.routesNote}</p>
         </div>
         <div className="routes">
           {club.routes.map((r, i) => (
@@ -293,19 +305,19 @@ function Routes() {
               </div>
               <div className="route-body">
                 <h3>{r.place}</h3>
-                <p className="route-path">{r.route}</p>
+                <p className="route-path">{tr(r.route)}</p>
                 <div className="route-meta">
                   <span>{r.km.toLocaleString('en-IN')} km</span>
-                  <span>{r.days} {r.days > 1 ? 'days' : 'day'}</span>
+                  <span>{r.days} {r.days > 1 ? u.daysWord : u.day}</span>
                 </div>
                 <a
                   className="route-link"
-                  href={waLink(`Hi ${club.name}! ${r.place} ride (${r.date}) join karni hai.`)}
+                  href={waLink(u.rideJoinMsg(club.name, r.place, r.date))}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`Book a seat for ${r.place}`}
+                  aria-label={`${u.bookSeat}: ${r.place}`}
                 >
-                  Book my seat <Icon name="arrow" className="btn-icon" />
+                  {u.bookSeat} <Icon name="arrow" className="btn-icon" />
                 </a>
               </div>
             </article>
@@ -317,24 +329,25 @@ function Routes() {
 }
 
 function Journal() {
+  const { u, tr } = useLang()
   return (
     <section className="section section-dark" id="journal">
       <div className="wrap">
         <div className="section-head">
           <div>
-            <p className="eyebrow eyebrow-light" data-reveal>Ride journal</p>
-            <h2 className="display h2" data-reveal>Miles we've made</h2>
+            <p className="eyebrow eyebrow-light" data-reveal>{u.journalEyebrow}</p>
+            <h2 className="display h2" data-reveal>{u.journalTitle}</h2>
           </div>
           <a href={club.instagram} target="_blank" rel="noreferrer" className="link-arrow" data-reveal>
-            More on Instagram
+            {u.moreInsta}
           </a>
         </div>
         <div className="journal">
           {club.journal.map((j, i) => (
-            <figure key={j.title} className={`journal-item j-${i}`} data-reveal="zoom" style={{ '--d': `${(i % 3) * 0.08}s` }}>
-              <Media image={j.image} scene={j.scene} seed={i + 21} label={j.title} parallax="0.08" />
+            <figure key={j.image + i} className={`journal-item j-${i}`} data-reveal="zoom" style={{ '--d': `${(i % 3) * 0.08}s` }}>
+              <Media image={j.image} scene={j.scene} seed={i + 21} label={tr(j.title)} parallax="0.08" />
               <figcaption>
-                <strong>{j.title}</strong>
+                <strong>{tr(j.title)}</strong>
                 <span>{j.meta}</span>
               </figcaption>
             </figure>
@@ -346,14 +359,15 @@ function Journal() {
 }
 
 function Riders() {
+  const { u } = useLang()
   const top = club.riders[0]?.km ?? 1
   return (
     <section className="section" id="riders">
       <div className="wrap riders-grid">
         <div>
-          <p className="eyebrow" data-reveal>{club.season} season</p>
-          <h2 className="display h2" data-reveal>Top riders</h2>
-          <p className="lead" data-reveal>Season me sabse zyada km chalane wale riders. Har ride ke baad update hota hai.</p>
+          <p className="eyebrow" data-reveal>{u.season(club.season)}</p>
+          <h2 className="display h2" data-reveal>{u.topRiders}</h2>
+          <p className="lead" data-reveal>{u.ridersLead}</p>
         </div>
         <ol className="riders">
           {club.riders.map((r, i) => (
@@ -376,53 +390,51 @@ function Riders() {
 }
 
 function Join() {
+  const { u } = useLang()
   const [form, setForm] = useState({ name: '', bike: '', city: '' })
   const update = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
   const submit = (e) => {
     e.preventDefault()
-    const msg =
-      `Hi ${club.name}! Mujhe club join karna hai.\n` +
-      `Naam: ${form.name}\nBike: ${form.bike}\nCity: ${form.city}`
-    window.open(waLink(msg), '_blank', 'noopener')
+    window.open(waLink(u.joinMsg(club.name, form)), '_blank', 'noopener')
   }
 
   return (
     <section className="join" id="join">
       <div className="join-media">
-        <Media image={club.joinImage} scene="night" seed={5} label="Motorcycle camp in the hills" parallax="0.2" />
+        <Media image={club.joinImage} scene="night" seed={5} label="Rider with a motorcycle in the hills" parallax="0.2" />
       </div>
       <div className="wrap join-grid">
         <div className="join-copy">
-          <p className="eyebrow eyebrow-light" data-reveal>Become a member</p>
-          <h2 className="display h2" data-reveal>Your next adventure starts here</h2>
-          <p data-reveal>Form bharo aur WhatsApp pe bhejo. Team aapko club group me add karegi aur agli ride ki details bhejegi. Joining free hai.</p>
+          <p className="eyebrow eyebrow-light" data-reveal>{u.member}</p>
+          <h2 className="display h2" data-reveal>{u.joinTitle}</h2>
+          <p data-reveal>{u.joinText}</p>
           <ul className="contact" data-reveal>
-            <li><span>Phone</span>{club.phone}</li>
-            <li><span>Email</span>{club.email}</li>
+            <li><span>{u.phone}</span>{club.phone}</li>
+            <li><span>{u.email}</span>{club.email}</li>
             <li>
-              <span>Instagram</span>
+              <span>{u.instagram}</span>
               <a href={club.instagram} target="_blank" rel="noreferrer">{club.instagramHandle}</a>
             </li>
-            <li><span>Base</span>{club.city}</li>
+            <li><span>{u.base}</span>{club.city}</li>
           </ul>
         </div>
         <form className="join-form" onSubmit={submit} data-reveal>
-          <h3>Join {club.fullName}</h3>
+          <h3>{u.joinForm(club.fullName)}</h3>
           <div className="field">
             <input id="f-name" name="name" value={form.name} onChange={update} required placeholder=" " />
-            <label htmlFor="f-name">Aapka naam</label>
+            <label htmlFor="f-name">{u.yourName}</label>
           </div>
           <div className="field">
             <input id="f-bike" name="bike" value={form.bike} onChange={update} required placeholder=" " />
-            <label htmlFor="f-bike">Bike</label>
+            <label htmlFor="f-bike">{u.bike}</label>
           </div>
           <div className="field">
             <input id="f-city" name="city" value={form.city} onChange={update} required placeholder=" " />
-            <label htmlFor="f-city">City</label>
+            <label htmlFor="f-city">{u.city}</label>
           </div>
           <button type="submit" className="btn btn-accent btn-block">
-            Send on WhatsApp <Icon name="arrow" className="btn-icon" />
+            {u.sendWa} <Icon name="arrow" className="btn-icon" />
           </button>
         </form>
       </div>
@@ -431,18 +443,19 @@ function Join() {
 }
 
 function Faq() {
+  const { u, tr } = useLang()
   return (
     <section className="section" id="faq">
       <div className="wrap faq-grid">
         <div>
           <p className="eyebrow" data-reveal>FAQ</p>
-          <h2 className="display h2" data-reveal>New to riding with us?</h2>
+          <h2 className="display h2" data-reveal>{u.faqTitle}</h2>
         </div>
         <div className="faqs">
           {club.faqs.map((f, i) => (
-            <details key={f.q} className="faq" data-reveal style={{ '--d': `${i * 0.06}s` }}>
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
+            <details key={i} className="faq" data-reveal style={{ '--d': `${i * 0.06}s` }}>
+              <summary>{tr(f.q)}</summary>
+              <p>{tr(f.a)}</p>
             </details>
           ))}
         </div>
@@ -452,6 +465,7 @@ function Faq() {
 }
 
 function Footer() {
+  const { u } = useLang()
   return (
     <footer className="footer">
       <div className="footer-bg" data-parallax="0.15" aria-hidden="true">
@@ -462,11 +476,11 @@ function Footer() {
       </div>
       <div className="footer-shade" aria-hidden="true" />
       <div className="wrap footer-grid">
-        <p className="footer-tag">Ride safe. Ride together. Ride far.</p>
+        <p className="footer-tag">{u.footerTag}</p>
         <nav className="footer-links">
-          <a href="#routes">Routes</a>
-          <a href="#journal">Journal</a>
-          <a href="#join">Join</a>
+          <a href="#routes">{u.nav.routes}</a>
+          <a href="#journal">{u.nav.journal}</a>
+          <a href="#join">{u.join}</a>
           <a href={club.instagram} target="_blank" rel="noreferrer">Instagram</a>
         </nav>
       </div>
@@ -475,21 +489,21 @@ function Footer() {
       </div>
       <div className="wrap footer-bottom">
         <span>© {year} {club.fullName} · {club.city}</span>
-        <span>Photos: Freepik</span>
+        <span>{u.photos}</span>
       </div>
     </footer>
   )
 }
 
-export default function App() {
+function Site() {
   useSmoothScroll()
   useReveal()
   return (
     <>
+      <Intro />
       <Header />
       <main>
         <Hero />
-        <NextRide />
         <Marquee />
         <About />
         <Routes />
@@ -500,5 +514,13 @@ export default function App() {
       </main>
       <Footer />
     </>
+  )
+}
+
+export default function App() {
+  return (
+    <LangProvider>
+      <Site />
+    </LangProvider>
   )
 }

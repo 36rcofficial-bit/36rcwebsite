@@ -11,6 +11,12 @@
     <meta property="og:description" content="Never stop exploring. Weekend rides across Chhattisgarh." />
     <meta property="og:image" content="/images/hero-bg.jpg" />
     <title>36RC – Chhattisgarh Riding Club</title>
+    <script>
+      // Intro sirf tab chale jab user ne reduced motion na maanga ho
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('has-intro')
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
