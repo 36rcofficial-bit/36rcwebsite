@@ -124,9 +124,7 @@ function Hero() {
         </picture>
       </div>
       {/* Layer 2: bada naam, rider ke peeche */}
-      <div className="hero-word" data-parallax="0.12" aria-hidden="true">
-        <Logo eager decorative />
-      </div>
+      <p className="hero-word" data-parallax="0.12" aria-hidden="true">{club.name}</p>
       {/* Layer 3: wahi rider, kata hua, naam ke aage */}
       <div className="hero-stage hero-rider" data-parallax="0.3">
         <picture>
@@ -467,9 +465,7 @@ function Footer() {
         </nav>
       </div>
       <div className="wrap">
-        <div className="footer-word" aria-hidden="true">
-          <Logo decorative />
-        </div>
+        <p className="footer-word" aria-hidden="true">{club.name}</p>
       </div>
       <div className="wrap footer-bottom">
         <span>© {year} {club.fullName} · {club.city}</span>
