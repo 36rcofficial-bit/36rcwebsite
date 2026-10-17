@@ -5,7 +5,7 @@ import { useLang } from './i18n.jsx'
 // index.html me <html class="has-intro"> pehle hi lag jaata hai (reduced-motion pe nahi),
 // isliye hero ki animation intro khatam hone tak ruki rehti hai.
 
-const DURATION = 2600 // ms, parda uthne tak
+const DURATION = 3000 // ms, parda uthne tak
 const EXIT = 900 // ms
 
 const preload = (src) =>
@@ -68,23 +68,22 @@ export default function Intro() {
   return (
     <div className={`intro ${phase === 'out' ? 'is-out' : ''}`} role="presentation">
       <div className="intro-center">
-        <picture className="intro-rider">
-          <source srcSet="/images/intro-rider.webp" type="image/webp" />
-          <img src="/images/intro-rider.png" alt="" />
-        </picture>
+        <span className="intro-glow" aria-hidden="true" />
         <div className="intro-logo">
           <picture>
             <source srcSet="/images/logo-light.webp" type="image/webp" />
             <img src="/images/logo-light.png" alt="36RC" />
           </picture>
         </div>
-        <span className="intro-line" aria-hidden="true" />
+        <span className="intro-line" aria-hidden="true">
+          <span style={{ transform: `scaleX(${count / 100})` }} />
+        </span>
         <p className="intro-tag">Never stop exploring</p>
       </div>
 
       <div className="intro-foot" aria-hidden="true">
         <span>Chhattisgarh Riding Club</span>
-        <span className="intro-count">{String(count).padStart(3, '0')}</span>
+        <span>{count}%</span>
       </div>
       <button type="button" className="intro-skip" onClick={() => setPhase('out')}>{u.tapSkip}</button>
     </div>
