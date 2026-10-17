@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { club } from './config.js'
+import Scene from './Scene.jsx'
 
 const year = new Date().getFullYear()
 
@@ -8,92 +9,69 @@ const waLink = (text) =>
 
 const pad = (n) => String(n).padStart(2, '0')
 
-// Photo ho to photo, warna road-stripe wala placeholder
-function Media({ image, label, className = '' }) {
+// Asli photo ho to photo, warna illustration
+function Media({ image, scene, seed, withRoad, label }) {
+  if (image) {
+    return <img className="media-img" src={image} alt={label} loading="lazy" />
+  }
+  return <Scene scene={scene} seed={seed} withRoad={withRoad} />
+}
+
+const icons = {
+  shield: <path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z M9 12l2 2 4-4" />,
+  route: <path d="M6 19a2 2 0 100-4 2 2 0 000 4zM18 9a2 2 0 100-4 2 2 0 000 4zM6 15V9a4 4 0 014-4h2M18 9v6a4 4 0 01-4 4h-2" />,
+  people: <path d="M9 11a3 3 0 100-6 3 3 0 000 6zM17 11a2.5 2.5 0 100-5M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 14c2.8 0 5 2.2 5 5" />,
+}
+
+function Icon({ name }) {
   return (
-    <div
-      className={`media ${image ? '' : 'media-empty'} ${className}`}
-      style={image ? { backgroundImage: `url(${image})` } : undefined}
-      role={image ? 'img' : undefined}
-      aria-label={image ? label : undefined}
-    />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {icons[name]}
+    </svg>
   )
 }
 
 function Header() {
+  const [solid, setSolid] = useState(false)
   const [open, setOpen] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setSolid(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   const links = [
-    ['#calendar', 'Calendar'],
-    ['#stories', 'Stories'],
-    ['#standings', 'Standings'],
+    ['#about', 'About'],
+    ['#routes', 'Routes'],
+    ['#journal', 'Journal'],
+    ['#riders', 'Riders'],
+    ['#faq', 'FAQ'],
   ]
   return (
-    <header className="header">
+    <header className={`header ${solid || open ? 'header-solid' : ''}`}>
       <div className="wrap header-inner">
         <a href="#top" className="brand" aria-label={`${club.fullName} home`}>
           <span className="brand-mark">{club.name}</span>
+          <span className="brand-sub">Riders Club</span>
         </a>
         <nav className="header-links">
           {links.map(([href, label]) => (
             <a key={href} href={href}>{label}</a>
           ))}
         </nav>
-        <div className="header-right">
-          <a href="#join" className="btn btn-red btn-sm">Join</a>
-          <button
-            className="burger"
-            aria-label="Menu"
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-          >
-            <span /><span /><span />
-          </button>
-        </div>
+        <a href="#join" className="btn btn-accent btn-sm header-cta">Join the club</a>
+        <button className="burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
+          <span /><span /><span />
+        </button>
       </div>
       {open && (
-        <nav className="drawer">
-          <div className="wrap">
-            {[...links, ['#join', 'Join the club'], ['#faq', 'FAQ']].map(([href, label]) => (
-              <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
-            ))}
-          </div>
+        <nav className="drawer wrap">
+          {[...links, ['#join', 'Join the club']].map(([href, label]) => (
+            <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
+          ))}
         </nav>
       )}
     </header>
-  )
-}
-
-function QuickLinks() {
-  return (
-    <div className="wrap pills" id="top">
-      {club.quickLinks.map(([href, label]) => (
-        <a key={href} href={href} className="pill">{label}</a>
-      ))}
-    </div>
-  )
-}
-
-function Featured() {
-  const f = club.featured
-  return (
-    <section className="wrap featured" id="stories">
-      <a href="#stories" className="feature-card">
-        <Media image={f.image} label={f.title} />
-        <div className="feature-overlay">
-          <span className="tag">{f.tag}</span>
-          <h1>{f.title}</h1>
-        </div>
-      </a>
-      <div className="story-row">
-        {club.stories.map((s, i) => (
-          <a key={s.title} href="#stories" className="story-card">
-            <Media image={s.image} label={s.title} className={`tint-${i % 4}`} />
-            <span className="tag tag-plain">{s.tag}</span>
-            <h3>{s.title}</h3>
-          </a>
-        ))}
-      </div>
-    </section>
   )
 }
 
@@ -112,71 +90,130 @@ function useCountdown(target) {
   }
 }
 
-function NextRide() {
-  const r = club.nextRide
-  const t = useCountdown(r.start)
+function Hero() {
+  const h = club.hero
+  const n = club.nextRide
+  const t = useCountdown(n.start)
   return (
-    <section className="next" aria-labelledby="next-title">
-      <div className="wrap next-grid">
-        <div className="next-info">
-          <p className="kicker">Round {pad(r.round)} · Next ride</p>
-          <h2 id="next-title" className="display">{r.title}</h2>
-          <p className="next-route">{r.route}</p>
-          <p className="next-meet">Meet point: {r.meetPoint}</p>
-          <div className="countdown" aria-label="Time left to flag off">
-            {[['days', 'Days'], ['hrs', 'Hrs'], ['mins', 'Mins'], ['secs', 'Secs']].map(([k, l]) => (
-              <div key={k} className="cd-cell">
+    <section className="hero" id="top">
+      <div className="hero-media">
+        <Media image={h.image} scene="sunset" seed={3} withRoad label={club.fullName} />
+      </div>
+      <div className="hero-shade" />
+      <div className="wrap hero-inner">
+        <div className="hero-copy">
+          <p className="eyebrow eyebrow-light">{h.eyebrow}</p>
+          <h1 className="display hero-title">
+            {h.title.map((line, i) => (
+              <span key={i}>{line}</span>
+            ))}
+          </h1>
+          <p className="hero-text">{h.text}</p>
+          <div className="hero-actions">
+            <a href="#routes" className="btn btn-accent">Explore routes</a>
+            <a href="#join" className="btn btn-glass">Join the club</a>
+          </div>
+        </div>
+
+        <aside className="next-card" aria-label="Next ride">
+          <p className="next-label">Next ride</p>
+          <h2 className="next-title">{n.title}</h2>
+          <p className="next-route">{n.route}</p>
+          <div className="countdown">
+            {[['days', 'Days'], ['hrs', 'Hrs'], ['mins', 'Min'], ['secs', 'Sec']].map(([k, l]) => (
+              <div key={k}>
                 <strong>{pad(t[k])}</strong>
                 <span>{l}</span>
               </div>
             ))}
           </div>
+          <p className="next-meet">Meet: {n.meetPoint}</p>
           <a
-            className="btn btn-red"
-            href={waLink(`Hi ${club.name}! Round ${r.round} – ${r.title} ke liye mera naam add kar do.`)}
+            className="btn btn-dark btn-block"
+            href={waLink(`Hi ${club.name}! ${n.title} ke liye mera naam add kar do.`)}
             target="_blank"
             rel="noreferrer"
           >
             Count me in
           </a>
-        </div>
-        <ol className="schedule">
-          {r.schedule.map(([day, time, what]) => (
-            <li key={time}>
-              <span className="sch-day">{day}</span>
-              <span className="sch-what">{what}</span>
-              <span className="sch-time">{time}</span>
-            </li>
+        </aside>
+      </div>
+
+      <div className="wrap">
+        <dl className="hero-stats">
+          {club.stats.map((s) => (
+            <div key={s.label}>
+              <dt>{s.label}</dt>
+              <dd>{s.value}</dd>
+            </div>
           ))}
-        </ol>
+        </dl>
       </div>
     </section>
   )
 }
 
-function Calendar() {
+function About() {
+  const a = club.about
   return (
-    <section className="section" id="calendar">
+    <section className="section" id="about">
+      <div className="wrap about-grid">
+        <div className="about-copy">
+          <p className="eyebrow">About {club.name}</p>
+          <h2 className="display h2">{a.title}</h2>
+          <p className="lead">{a.text}</p>
+        </div>
+        <ul className="points">
+          {a.points.map((p) => (
+            <li key={p.title} className="point">
+              <span className="point-icon"><Icon name={p.icon} /></span>
+              <div>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+function Routes() {
+  return (
+    <section className="section section-sand" id="routes">
       <div className="wrap">
         <div className="section-head">
-          <h2 className="display">{club.season} Ride calendar</h2>
-          <a href="#join" className="link-arrow">Join a ride</a>
+          <div>
+            <p className="eyebrow">Upcoming rides</p>
+            <h2 className="display h2">Routes this season</h2>
+          </div>
+          <p className="section-note">Har ride se pehle WhatsApp group me poora plan, fuel stops aur stay details aati hain.</p>
         </div>
-        <div className="rounds">
-          {club.calendar.map((c) => (
-            <article key={c.round} className={`round ${c.status === 'done' ? 'round-done' : ''}`}>
-              <div className="round-top">
-                <span className="round-no">Round {c.round}</span>
-                <span className={`round-status ${c.status}`}>
-                  {c.status === 'done' ? 'Completed' : 'Upcoming'}
-                </span>
+        <div className="routes">
+          {club.routes.map((r, i) => (
+            <article key={r.place} className="route-card">
+              <div className="route-media">
+                <Media image={r.image} scene={r.scene} seed={i + 11} label={r.place} />
+                <span className="route-date">{r.date}</span>
+                <span className={`route-level level-${r.level.toLowerCase()}`}>{r.level}</span>
               </div>
-              <p className="round-dates">{c.dates}</p>
-              <h3 className="round-place">{c.place}</h3>
-              <p className="round-route">{c.route}</p>
-              <p className="round-km">
-                <strong>{c.km.toLocaleString('en-IN')}</strong> km
-              </p>
+              <div className="route-body">
+                <h3>{r.place}</h3>
+                <p className="route-path">{r.route}</p>
+                <dl className="route-facts">
+                  <div><dt>Distance</dt><dd>{r.km.toLocaleString('en-IN')} km</dd></div>
+                  <div><dt>Duration</dt><dd>{r.days} {r.days > 1 ? 'days' : 'day'}</dd></div>
+                </dl>
+                <a
+                  className="route-link"
+                  href={waLink(`Hi ${club.name}! ${r.place} ride (${r.date}) join karni hai.`)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Book my seat
+                </a>
+              </div>
             </article>
           ))}
         </div>
@@ -185,19 +222,28 @@ function Calendar() {
   )
 }
 
-function Numbers() {
+function Journal() {
   return (
-    <section className="section section-dark" id="numbers">
+    <section className="section section-dark" id="journal">
       <div className="wrap">
         <div className="section-head">
-          <h2 className="display">Club in numbers</h2>
+          <div>
+            <p className="eyebrow eyebrow-light">Ride journal</p>
+            <h2 className="display h2">Miles we've made</h2>
+          </div>
+          <a href={club.instagram} target="_blank" rel="noreferrer" className="link-arrow">
+            More on Instagram
+          </a>
         </div>
-        <div className="stats">
-          {club.stats.map((s) => (
-            <div key={s.label} className="stat">
-              <strong>{s.value}</strong>
-              <span>{s.label}</span>
-            </div>
+        <div className="journal">
+          {club.journal.map((j, i) => (
+            <figure key={j.title} className={`journal-item j-${i}`}>
+              <Media image={j.image} scene={j.scene} seed={i + 21} label={j.title} />
+              <figcaption>
+                <strong>{j.title}</strong>
+                <span>{j.meta}</span>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>
@@ -205,48 +251,31 @@ function Numbers() {
   )
 }
 
-function Standings() {
-  const leader = club.standings[0]?.km ?? 0
+function Riders() {
+  const top = club.riders[0]?.km ?? 1
   return (
-    <section className="section" id="standings">
-      <div className="wrap">
-        <div className="section-head">
-          <h2 className="display">{club.season} Km standings</h2>
+    <section className="section" id="riders">
+      <div className="wrap riders-grid">
+        <div>
+          <p className="eyebrow">{club.season} season</p>
+          <h2 className="display h2">Top riders</h2>
+          <p className="lead">Season me sabse zyada km chalane wale riders. Har ride ke baad update hota hai.</p>
         </div>
-        <div className="table-scroll">
-          <table className="standings">
-            <thead>
-              <tr>
-                <th scope="col">Pos</th>
-                <th scope="col">Rider</th>
-                <th scope="col" className="hide-sm">Bike</th>
-                <th scope="col" className="num">Km</th>
-                <th scope="col" className="num hide-sm">Gap</th>
-              </tr>
-            </thead>
-            <tbody>
-              {club.standings.map((r, i) => (
-                <tr key={r.name}>
-                  <td className="pos">{i + 1}</td>
-                  <td>
-                    <span className="rider">
-                      <span className="rider-bar" style={{ background: r.color }} />
-                      <span>
-                        <strong>{r.name}</strong>
-                        <small className="show-sm">{r.bike}</small>
-                      </span>
-                    </span>
-                  </td>
-                  <td className="hide-sm muted">{r.bike}</td>
-                  <td className="num"><strong>{r.km.toLocaleString('en-IN')}</strong></td>
-                  <td className="num hide-sm muted">
-                    {i === 0 ? 'Leader' : `−${(leader - r.km).toLocaleString('en-IN')}`}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <ol className="riders">
+          {club.riders.map((r, i) => (
+            <li key={r.name} className="rider">
+              <span className="rider-pos">{pad(i + 1)}</span>
+              <div className="rider-info">
+                <div className="rider-row">
+                  <strong>{r.name}</strong>
+                  <span className="rider-km">{r.km.toLocaleString('en-IN')} km</span>
+                </div>
+                <span className="rider-bike">{r.bike}</span>
+                <span className="rider-track"><span style={{ width: `${(r.km / top) * 100}%` }} /></span>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   )
@@ -266,14 +295,14 @@ function Join() {
 
   return (
     <section className="join" id="join">
+      <div className="join-media">
+        <Scene scene="night" seed={5} />
+      </div>
       <div className="wrap join-grid">
-        <div>
-          <p className="kicker kicker-light">Become a member</p>
-          <h2 className="display">Get on the grid</h2>
-          <p className="join-copy">
-            Form bharo aur WhatsApp pe bhejo. Team aapko club group me add karegi aur agli
-            ride ki details bhejegi. Joining free hai.
-          </p>
+        <div className="join-copy">
+          <p className="eyebrow eyebrow-light">Become a member</p>
+          <h2 className="display h2">Your next adventure starts here</h2>
+          <p>Form bharo aur WhatsApp pe bhejo. Team aapko club group me add karegi aur agli ride ki details bhejegi. Joining free hai.</p>
           <ul className="contact">
             <li><span>Phone</span>{club.phone}</li>
             <li><span>Email</span>{club.email}</li>
@@ -285,13 +314,14 @@ function Join() {
           </ul>
         </div>
         <form className="join-form" onSubmit={submit}>
+          <h3>Join {club.fullName}</h3>
           <label htmlFor="f-name">Aapka naam</label>
           <input id="f-name" name="name" value={form.name} onChange={update} required placeholder="Rahul Verma" />
           <label htmlFor="f-bike">Bike</label>
           <input id="f-bike" name="bike" value={form.bike} onChange={update} required placeholder="Royal Enfield Himalayan" />
           <label htmlFor="f-city">City</label>
           <input id="f-city" name="city" value={form.city} onChange={update} required placeholder="Raipur" />
-          <button type="submit" className="btn btn-dark">Send on WhatsApp</button>
+          <button type="submit" className="btn btn-accent btn-block">Send on WhatsApp</button>
         </form>
       </div>
     </section>
@@ -301,9 +331,10 @@ function Join() {
 function Faq() {
   return (
     <section className="section" id="faq">
-      <div className="wrap faq-wrap">
-        <div className="section-head">
-          <h2 className="display">New to {club.name}?</h2>
+      <div className="wrap faq-grid">
+        <div>
+          <p className="eyebrow">FAQ</p>
+          <h2 className="display h2">New to riding with us?</h2>
         </div>
         <div className="faqs">
           {club.faqs.map((f) => (
@@ -324,18 +355,16 @@ function Footer() {
       <div className="wrap footer-grid">
         <div>
           <span className="brand-mark">{club.name}</span>
-          <p className="muted">{club.fullName} · {club.city}</p>
+          <p>{club.fullName} · {club.city}</p>
         </div>
         <nav className="footer-links">
-          <a href="#calendar">Calendar</a>
-          <a href="#standings">Standings</a>
+          <a href="#routes">Routes</a>
+          <a href="#journal">Journal</a>
           <a href="#join">Join</a>
           <a href={club.instagram} target="_blank" rel="noreferrer">Instagram</a>
         </nav>
       </div>
-      <div className="wrap footer-bottom muted">
-        © {year} {club.fullName}. Ride safe, always.
-      </div>
+      <div className="wrap footer-bottom">© {year} {club.fullName}. Ride safe, always.</div>
     </footer>
   )
 }
@@ -345,12 +374,11 @@ export default function App() {
     <>
       <Header />
       <main>
-        <QuickLinks />
-        <Featured />
-        <NextRide />
-        <Calendar />
-        <Numbers />
-        <Standings />
+        <Hero />
+        <About />
+        <Routes />
+        <Journal />
+        <Riders />
         <Join />
         <Faq />
       </main>

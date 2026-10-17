@@ -1,6 +1,7 @@
 // Club ki saari details yahan badlo. Page apne aap update ho jayega.
-// Kisi bhi card me photo lagani ho to `image: '/images/naam.jpg'` do
-// aur wo photo `public/images/` folder me daal do.
+// Kisi bhi card me asli photo lagani ho to `image: '/images/naam.jpg'` do
+// aur wo photo `public/images/` folder me daal do. Photo na ho to
+// illustration dikhega (scene: 'sunset' | 'forest' | 'waterfall' | 'ghaat' | 'dawn' | 'night').
 
 export const club = {
   name: '36RC',
@@ -15,67 +16,105 @@ export const club = {
   instagram: 'https://instagram.com/36rcofficial',
   instagramHandle: '@36rcofficial',
 
-  quickLinks: [
-    ['#calendar', 'Ride calendar'],
-    ['#stories', 'Ride stories'],
-    ['#standings', 'Km standings'],
-    ['#join', 'Join the club'],
-    ['#faq', 'New to 36RC?'],
-  ],
-
-  featured: {
-    tag: 'Ride report',
-    title: 'Chitrakote run: 42 riders, 560 km and one very wet ghaat',
+  hero: {
+    eyebrow: 'Motorcycle touring club · Chhattisgarh',
+    title: ['Ride beyond', 'the map.'],
+    text: 'Ghaat, jungle aur waterfall routes pe weekend rides. Planned routes, safety-first group riding aur ek riders family jo saath chalti hai.',
     image: '',
   },
-
-  stories: [
-    { tag: 'Ride report', title: 'Sunday breakfast ride to Champaran: 120 km before 10 am' },
-    { tag: 'Safety', title: 'Why lead and sweep riders matter on every group ride' },
-    { tag: 'Riders', title: 'Meet the rider who crossed 25,000 km with 36RC this year' },
-    { tag: 'Gear', title: 'Monsoon riding kit: what our senior riders actually carry' },
-  ],
-
-  // Agli ride: countdown isi date tak chalega (YYYY-MM-DDTHH:mm, Indian time)
-  nextRide: {
-    round: 9,
-    title: 'Sunday Breakfast Ride',
-    route: 'Raipur → Champaran → Raipur',
-    start: '2026-10-26T06:00:00+05:30',
-    meetPoint: 'Telibandha Lake gate',
-    schedule: [
-      ['Sun 26 Oct', '05:45', 'Riders assemble & briefing'],
-      ['Sun 26 Oct', '06:00', 'Flag off'],
-      ['Sun 26 Oct', '07:30', 'Breakfast stop, Champaran'],
-      ['Sun 26 Oct', '10:00', 'Back in Raipur'],
-    ],
-  },
-
-  // status: 'done' ya 'upcoming'
-  calendar: [
-    { round: 7, dates: '14 SEP', place: 'Mainpat', route: 'Raipur → Mainpat', km: 680, status: 'done' },
-    { round: 8, dates: '05 OCT', place: 'Sirpur', route: 'Raipur → Sirpur', km: 180, status: 'done' },
-    { round: 9, dates: '26 OCT', place: 'Champaran', route: 'Raipur → Champaran', km: 120, status: 'upcoming' },
-    { round: 10, dates: '08–09 NOV', place: 'Chitrakote', route: 'Raipur → Jagdalpur → Chitrakote', km: 560, status: 'upcoming' },
-    { round: 11, dates: '23 NOV', place: 'Keshkal Ghaat', route: 'Raipur → Keshkal → Kanker', km: 340, status: 'upcoming' },
-    { round: 12, dates: '13–14 DEC', place: 'Amarkantak', route: 'Raipur → Bilaspur → Amarkantak', km: 520, status: 'upcoming' },
-  ],
-
-  // Season ke km leaderboard (color = rider ki bike ka rang, sirf design ke liye)
-  standings: [
-    { name: 'Rider Name 1', bike: 'Royal Enfield Himalayan 450', km: 8420, color: '#e8002d' },
-    { name: 'Rider Name 2', bike: 'KTM 390 Adventure', km: 7915, color: '#ff8000' },
-    { name: 'Rider Name 3', bike: 'Triumph Speed 400', km: 7340, color: '#27f4d2' },
-    { name: 'Rider Name 4', bike: 'Hero Xpulse 200 4V', km: 6880, color: '#3671c6' },
-    { name: 'Rider Name 5', bike: 'Bajaj Dominar 400', km: 6215, color: '#52e252' },
-    { name: 'Rider Name 6', bike: 'Royal Enfield Interceptor 650', km: 5790, color: '#b6babd' },
-  ],
 
   stats: [
     { value: '150+', label: 'Riders' },
     { value: '80+', label: 'Group rides' },
     { value: '50,000+', label: 'Km covered' },
     { value: '5', label: 'Seasons' },
+  ],
+
+  about: {
+    title: 'Har weekend ek naya route',
+    text: 'Raipur se shuru hokar Bastar ke jungle, Mainpat ke plateau aur Keshkal ke ghaat tak. Bike koi bhi ho, josh ek hi hai.',
+    points: [
+      {
+        icon: 'shield',
+        title: 'Safety first',
+        text: 'Full gear compulsory. Har ride pe lead aur sweep rider, aur briefing ke bina start nahi.',
+      },
+      {
+        icon: 'route',
+        title: 'Planned routes',
+        text: 'Route, fuel stops aur food breaks pehle se tay. Aapko bas ride enjoy karni hai.',
+      },
+      {
+        icon: 'people',
+        title: 'Riders family',
+        text: 'Puncture ho ya breakdown, group saath rukta hai. Koi peeche nahi chhootta.',
+      },
+    ],
+  },
+
+  // Agli ride: countdown isi time tak chalega (Indian time)
+  nextRide: {
+    title: 'Sunday Breakfast Ride',
+    route: 'Raipur → Champaran',
+    start: '2026-10-26T06:00:00+05:30',
+    meetPoint: 'Telibandha Lake gate, 05:45',
+  },
+
+  // level: 'Easy' | 'Moderate' | 'Hard'
+  routes: [
+    {
+      date: '26 Oct',
+      place: 'Champaran',
+      route: 'Raipur → Champaran → Raipur',
+      km: 120,
+      days: 1,
+      level: 'Easy',
+      scene: 'dawn',
+    },
+    {
+      date: '08–09 Nov',
+      place: 'Chitrakote Falls',
+      route: 'Raipur → Jagdalpur → Chitrakote',
+      km: 560,
+      days: 2,
+      level: 'Moderate',
+      scene: 'waterfall',
+    },
+    {
+      date: '23 Nov',
+      place: 'Keshkal Ghaat',
+      route: 'Raipur → Keshkal → Kanker',
+      km: 340,
+      days: 1,
+      level: 'Moderate',
+      scene: 'ghaat',
+    },
+    {
+      date: '13–14 Dec',
+      place: 'Amarkantak',
+      route: 'Raipur → Bilaspur → Amarkantak',
+      km: 520,
+      days: 2,
+      level: 'Hard',
+      scene: 'forest',
+    },
+  ],
+
+  journal: [
+    { title: 'Mainpat plateau run', meta: 'Sep 2026 · 680 km', scene: 'sunset' },
+    { title: 'Monsoon ride to Sirpur', meta: 'Oct 2026 · 180 km', scene: 'forest' },
+    { title: 'Night halt at Jagdalpur', meta: 'Aug 2026 · 2 days', scene: 'night' },
+    { title: 'Chitrakote in full flow', meta: 'Jul 2026 · 560 km', scene: 'waterfall' },
+    { title: 'Sunrise at Keshkal', meta: 'Jun 2026 · 340 km', scene: 'dawn' },
+  ],
+
+  // Season ke top riders (km ke hisaab se)
+  riders: [
+    { name: 'Rider Name 1', bike: 'Royal Enfield Himalayan 450', km: 8420 },
+    { name: 'Rider Name 2', bike: 'KTM 390 Adventure', km: 7915 },
+    { name: 'Rider Name 3', bike: 'Triumph Speed 400', km: 7340 },
+    { name: 'Rider Name 4', bike: 'Hero Xpulse 200 4V', km: 6880 },
+    { name: 'Rider Name 5', bike: 'Bajaj Dominar 400', km: 6215 },
   ],
 
   faqs: [
@@ -89,7 +128,7 @@ export const club = {
     },
     {
       q: 'Main naya rider hoon, kya main aa sakta hoon?',
-      a: 'Bilkul. Pehle 200 km se chhoti rides se shuru karo. Senior riders aapko guide karenge.',
+      a: 'Bilkul. Pehle Easy level wali rides se shuru karo. Senior riders aapko guide karenge.',
     },
     {
       q: 'Riding gear zaroori hai?',
