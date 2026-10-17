@@ -146,14 +146,6 @@ export const club = {
     { title: { en: 'On stage, together', hi: 'Stage pe, sab saath' }, meta: 'CGRM 2024', scene: 'night', image: '/images/club-stage.webp', position: '50% 70%' },
   ],
 
-  // Season ke top riders (km ke hisaab se)
-  riders: [
-    { name: 'Rider Name 1', bike: 'Royal Enfield Himalayan 450', km: 8420 },
-    { name: 'Rider Name 2', bike: 'KTM 390 Adventure', km: 7915 },
-    { name: 'Rider Name 3', bike: 'Triumph Speed 400', km: 7340 },
-    { name: 'Rider Name 4', bike: 'Hero Xpulse 200 4V', km: 6880 },
-    { name: 'Rider Name 5', bike: 'Bajaj Dominar 400', km: 6215 },
-  ],
 
   faqs: [
     {

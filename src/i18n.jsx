@@ -45,7 +45,7 @@ export function LangToggle({ className = '' }) {
 
 const UI = {
   en: {
-    nav: { about: 'About', routes: 'Routes', journal: 'Journal', riders: 'Riders', faq: 'FAQ' },
+    nav: { about: 'About', routes: 'Routes', journal: 'Journal', faq: 'FAQ' },
     joinClub: 'Join the club',
     viewRides: 'View rides',
     scroll: 'Scroll',
@@ -66,9 +66,6 @@ const UI = {
     journalEyebrow: 'Ride journal',
     journalTitle: "Miles we've made",
     moreInsta: 'More on Instagram',
-    season: (y) => `${y} season`,
-    topRiders: 'Top riders',
-    ridersLead: 'Riders with the most kilometres this season. Updated after every ride.',
     member: 'Become a member',
     joinTitle: 'Your next adventure starts here',
     joinText: "Fill in the form and send it on WhatsApp. The team will add you to the club group and share the next ride's details. Joining is free.",
@@ -84,7 +81,7 @@ const UI = {
     tapSkip: 'Tap to skip',
   },
   hi: {
-    nav: { about: 'About', routes: 'Routes', journal: 'Journal', riders: 'Riders', faq: 'FAQ' },
+    nav: { about: 'About', routes: 'Routes', journal: 'Journal', faq: 'FAQ' },
     joinClub: 'Club join karo',
     viewRides: 'Rides dekho',
     scroll: 'Scroll',
@@ -105,9 +102,6 @@ const UI = {
     journalEyebrow: 'Ride journal',
     journalTitle: 'Humare safar',
     moreInsta: 'Instagram pe aur dekho',
-    season: (y) => `${y} season`,
-    topRiders: 'Top riders',
-    ridersLead: 'Season me sabse zyada km chalane wale riders. Har ride ke baad update hota hai.',
     member: 'Member bano',
     joinTitle: 'Aapka agla adventure yahin se',
     joinText: 'Form bharo aur WhatsApp pe bhejo. Team aapko club group me add karegi aur agli ride ki details bhejegi. Joining free hai.',

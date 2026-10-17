@@ -66,7 +66,6 @@ function Header() {
     ['#about', u.nav.about],
     ['#routes', u.nav.routes],
     ['#journal', u.nav.journal],
-    ['#riders', u.nav.riders],
     ['#faq', u.nav.faq],
   ]
   const cls = ['header', solid || open ? 'header-solid' : '', hidden && !open ? 'header-hidden' : '']
@@ -392,37 +391,6 @@ function Journal() {
   )
 }
 
-function Riders() {
-  const { u } = useLang()
-  const top = club.riders[0]?.km ?? 1
-  return (
-    <section className="section" id="riders">
-      <div className="wrap riders-grid">
-        <div>
-          <p className="eyebrow" data-reveal>{u.season(club.season)}</p>
-          <h2 className="display h2" data-reveal>{u.topRiders}</h2>
-          <p className="lead" data-reveal>{u.ridersLead}</p>
-        </div>
-        <ol className="riders">
-          {club.riders.map((r, i) => (
-            <li key={r.name} className="rider" data-reveal style={{ '--d': `${i * 0.07}s`, '--w': `${(r.km / top) * 100}%` }}>
-              <span className="rider-pos">{pad(i + 1)}</span>
-              <div className="rider-info">
-                <div className="rider-row">
-                  <strong>{r.name}</strong>
-                  <span className="rider-km">{r.km.toLocaleString('en-IN')} km</span>
-                </div>
-                <span className="rider-bike">{r.bike}</span>
-                <span className="rider-track"><span /></span>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  )
-}
-
 function Join() {
   const { u } = useLang()
   const [form, setForm] = useState({ name: '', bike: '', city: '' })
@@ -542,7 +510,6 @@ function Site() {
         <About />
         <Routes />
         <Journal />
-        <Riders />
         <Join />
         <Faq />
       </main>

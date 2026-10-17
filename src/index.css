@@ -424,19 +424,6 @@ img { max-width: 100%; display: block; }
 .journal-item strong { font-size: 1.05rem; }
 .journal-item span { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); }
 
-/* Riders */
-.riders-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(3rem, 7vw, 7rem); align-items: start; }
-.riders { list-style: none; display: grid; border-top: 1px solid var(--line); }
-.rider { display: grid; grid-template-columns: 3.2rem 1fr; gap: 1rem; padding-block: 1.3rem; border-bottom: 1px solid var(--line); }
-.rider-pos { font-family: var(--serif); font-style: italic; font-size: 2rem; line-height: 1; color: var(--ink-soft); }
-.rider:first-child .rider-pos { color: var(--accent); }
-.rider-info { display: grid; gap: 0.15rem; min-width: 0; }
-.rider-row { display: flex; justify-content: space-between; gap: 1rem; }
-.rider-km { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.rider-bike { font-size: 0.88rem; color: var(--ink-soft); }
-.rider-track { height: 3px; background: var(--sand); border-radius: 3px; margin-top: 0.6rem; overflow: hidden; }
-.rider-track span { display: block; height: 100%; width: var(--w, 100%); background: var(--accent); border-radius: 3px; }
-
 /* Join */
 .join { position: relative; overflow: hidden; color: #fff; padding-block: clamp(5rem, 11vw, 9rem); background: var(--forest); }
 .join-media { position: absolute; inset: 0; }
@@ -542,8 +529,6 @@ img { max-width: 100%; display: block; }
 }
 .motion [data-reveal='zoom'] { transform: translateY(40px) scale(0.96); }
 .motion [data-reveal].is-in { opacity: 1; transform: none; }
-.motion .rider[data-reveal] .rider-track span { transform: scaleX(0); transform-origin: left; transition: transform 1.4s var(--ease) 0.2s; }
-.motion .rider[data-reveal].is-in .rider-track span { transform: scaleX(1); }
 
 /* Responsive */
 @media (max-width: 1080px) {
@@ -555,7 +540,7 @@ img { max-width: 100%; display: block; }
 @media (max-width: 860px) {
   .header-links, .header-cta { display: none; }
   .burger { display: block; }
-  .about-grid, .riders-grid, .faq-grid, .join-grid { grid-template-columns: 1fr; }
+  .about-grid, .faq-grid, .join-grid { grid-template-columns: 1fr; }
   .about-badge { left: 1rem; }  .journal { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 190px; }
   .j-0 { grid-column: span 2; }
   .j-3 { grid-column: span 1; }
