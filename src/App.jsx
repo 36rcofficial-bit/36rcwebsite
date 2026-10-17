@@ -310,10 +310,6 @@ function About() {
           <div className="about-frame">
             <Media image={a.image} scene="ghaat" seed={4} label="36RC helmet with ride stickers" parallax="0.12" />
           </div>
-          <picture className="about-sticker" aria-hidden="true">
-            <source srcSet="/images/badge.webp" type="image/webp" />
-            <img src="/images/badge.png" alt="" loading="lazy" width="640" height="640" />
-          </picture>
           <div className="about-badge">
             <strong><CountUp value={club.stats[2].value} /></strong>
             <span>km {u.together}</span>
