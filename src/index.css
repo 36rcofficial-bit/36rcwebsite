@@ -419,8 +419,7 @@ img { max-width: 100%; display: block; }
   font-size: clamp(7rem, 30vw, 26rem);
   line-height: 0.78;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.04);
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.12);
   margin-top: 2.5rem;
   user-select: none;
   white-space: nowrap;
