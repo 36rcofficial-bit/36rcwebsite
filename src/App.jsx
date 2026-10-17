@@ -120,29 +120,22 @@ function NextRideCard() {
   return (
     <aside className="ride-card hero-in" style={{ '--d': '1s' }} aria-labelledby="ride-card-title">
       <div className="ride-card-head">
-        <span className="pulse" aria-hidden="true" />
-        <span>{u.nextRide}</span>
+        <span className="ride-card-label"><span className="pulse" aria-hidden="true" />{u.nextRide}</span>
+        <span className="ride-card-date">{n.dates}</span>
       </div>
       <h2 id="ride-card-title" className="ride-card-title">{n.title}</h2>
-      <ul className="ride-card-facts">
-        <li><Icon name="calendar" />{n.dates}</li>
-        <li><Icon name="pin" />{tr(n.distance)} · {n.days} {n.days > 1 ? u.daysWord : u.day}</li>
-      </ul>
-      <p className="ride-card-blurb">{tr(n.blurb)}</p>
-      <div className="ride-card-count" aria-label="Time left to flag off">
-        {[['days', u.days], ['hrs', u.hrs], ['mins', u.mins], ['secs', u.secs]].map(([k, l]) => (
-          <div key={k}>
-            <strong>{pad(t[k])}</strong>
-            <span>{l}</span>
-          </div>
-        ))}
-      </div>
-      <div className="ride-card-actions">
+      <p className="ride-card-meta">
+        {tr(n.distance)} · {n.days} {n.days > 1 ? u.daysWord : u.day}
+        <a href={waLink(u.rideInfoMsg(club.name, n.title))} target="_blank" rel="noreferrer">{u.details}</a>
+      </p>
+      <div className="ride-card-row">
+        <p className="ride-card-count" aria-label="Time left to flag off">
+          {[['days', 'd'], ['hrs', 'h'], ['mins', 'm'], ['secs', 's']].map(([k, l]) => (
+            <span key={k}><strong>{pad(t[k])}</strong>{l}</span>
+          ))}
+        </p>
         <a className="btn btn-accent btn-sm" href={waLink(u.rideJoinMsg(club.name, n.title, n.dates))} target="_blank" rel="noreferrer">
           {u.countIn} <Icon name="arrow" className="btn-icon" />
-        </a>
-        <a className="btn btn-glass btn-sm" href={waLink(u.rideInfoMsg(club.name, n.title))} target="_blank" rel="noreferrer">
-          {u.details}
         </a>
       </div>
     </aside>

@@ -89,7 +89,7 @@ const UI = {
     viewRides: 'Rides dekho',
     scroll: 'Scroll',
     nextRide: 'Agli ride',
-    countIn: 'Mera naam likho',
+    countIn: 'Join karo',
     details: 'Details',
     days: 'Din', hrs: 'Ghante', mins: 'Min', secs: 'Sec',
     day: 'din', daysWord: 'din',
