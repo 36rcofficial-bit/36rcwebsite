@@ -18,9 +18,11 @@ export const club = {
 
   hero: {
     eyebrow: 'Motorcycle touring club · Chhattisgarh',
-    title: ['Ride beyond', 'the map.'],
-    text: 'Ghaat, jungle aur waterfall routes pe weekend rides. Planned routes, safety-first group riding aur ek riders family jo saath chalti hai.',
-    image: '/images/hero.jpg',
+    title: ['Ride', 'beyond', 'the map'],
+    text: 'Chhattisgarh ka riders club. Ghaat, jungle aur waterfall routes pe weekend rides, safety-first group riding aur ek family jo saath chalti hai.',
+    // Background photo aur usi photo se kata hua rider (rider bada "36RC" ke aage dikhta hai)
+    image: '/images/hero-bg',
+    rider: '/images/hero-rider',
   },
 
   stats: [
@@ -30,7 +32,11 @@ export const club = {
     { value: '5', label: 'Seasons' },
   ],
 
+  // Join section ke peeche wali photo
+  joinImage: '/images/amarkantak.jpg',
+
   about: {
+    image: '/images/sunset.jpg',
     title: 'Har weekend ek naya route',
     text: 'Raipur se shuru hokar Bastar ke jungle, Mainpat ke plateau aur Keshkal ke ghaat tak. Bike koi bhi ho, josh ek hi hai.',
     points: [
@@ -105,9 +111,9 @@ export const club = {
   ],
 
   journal: [
-    { title: 'Mainpat plateau run', meta: 'Sep 2026 · 680 km', scene: 'sunset', image: '/images/sunset.jpg' },
+    { title: 'Keshkal ghaat climb', meta: 'Jun 2026 · 340 km', scene: 'ghaat', image: '/images/ghaat-road.jpg' },
     { title: 'Dirt trail to Sirpur', meta: 'Oct 2026 · 180 km', scene: 'forest', image: '/images/offroad.jpg' },
-    { title: 'Keshkal ghaat climb', meta: 'Jun 2026 · 340 km', scene: 'dawn', image: '/images/ghaat-road.jpg' },
+    { title: 'Misty morning, Mainpat', meta: 'Sep 2026 · 680 km', scene: 'dawn', image: '/images/champaran.jpg' },
     { title: 'Chitrakote in full flow', meta: 'Jul 2026 · 560 km', scene: 'waterfall', image: '/images/chitrakote.jpg' },
     { title: 'Camp night near Jagdalpur', meta: 'Aug 2026 · 2 days', scene: 'night', image: '/images/camping.jpg' },
   ],
