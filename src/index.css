@@ -260,6 +260,7 @@ img { max-width: 100%; display: block; }
 .point p { color: var(--ink-soft); font-size: 0.95rem; }
 .about-visual { position: relative; }
 .about-frame { position: relative; aspect-ratio: 4 / 5; max-width: 100%; border-radius: var(--radius); overflow: hidden; background: var(--sand); }
+.about-frame .media-img { object-position: 62% 38%; }
 .about-badge {
   position: absolute; left: -1.5rem; bottom: 2rem;
   background: var(--accent); color: #fff;
@@ -268,7 +269,7 @@ img { max-width: 100%; display: block; }
   display: grid;
 }
 .about-badge strong { font-family: var(--display); font-weight: 900; font-size: 2.6rem; line-height: 1; }
-.about-badge span { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.9; }
+.about-badge > span { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.9; }
 
 /* Routes */
 .routes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }

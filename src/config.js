@@ -36,7 +36,8 @@ export const club = {
   joinImage: '/images/amarkantak.jpg',
 
   about: {
-    image: '/images/sunset.jpg',
+    // Club ki apni photo: helmet pe 36RC ride stickers
+    image: '/images/club-helmet.jpg',
     title: 'Har weekend ek naya route',
     text: 'Raipur se shuru hokar Bastar ke jungle, Mainpat ke plateau aur Keshkal ke ghaat tak. Bike koi bhi ho, josh ek hi hai.',
     points: [
