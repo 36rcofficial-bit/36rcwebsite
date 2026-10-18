@@ -79,6 +79,46 @@ export function useReveal(key) {
   }, [key])
 }
 
+// Mobile pe cards ka stack: peeche wala card agle card ke aane pe thoda chhota aur dark hota hai.
+// Sticky positioning CSS me hai (.routes media query); ye sirf scale/brightness set karta hai.
+export function useCardStack(selector, query = '(max-width: 560px)') {
+  useEffect(() => {
+    const mq = window.matchMedia(query)
+    let raf = 0
+    const cards = () => Array.from(document.querySelectorAll(selector))
+
+    const reset = () => cards().forEach((c) => { c.style.transform = ''; c.style.filter = '' })
+    const update = () => {
+      raf = 0
+      if (!mq.matches) return
+      const list = cards()
+      list.forEach((card, i) => {
+        const next = list[i + 1]
+        if (!next) { card.style.transform = ''; card.style.filter = ''; return }
+        const top = parseFloat(getComputedStyle(card).top) || 0
+        const h = card.offsetHeight
+        const p = Math.min(1, Math.max(0, (top + h - next.getBoundingClientRect().top) / h))
+        card.style.transform = `scale(${(1 - 0.07 * p).toFixed(4)})`
+        card.style.filter = p > 0 ? `brightness(${(1 - 0.45 * p).toFixed(3)})` : ''
+      })
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
+    const onChange = () => (mq.matches ? update() : reset())
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    mq.addEventListener('change', onChange)
+    update()
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      mq.removeEventListener('change', onChange)
+      reset()
+    }
+  }, [selector, query])
+}
+
 // "50,000+" jaisa number dikhte hi 0 se count-up
 export function CountUp({ value }) {
   const ref = useRef(null)

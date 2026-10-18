@@ -698,8 +698,21 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 560px) {
-  .routes { grid-template-columns: 1fr; }
-  .route-card { aspect-ratio: 4 / 4.6; }
+  /* Mobile: cards ek ke upar ek stack hote hain */
+  .routes { display: block; padding-bottom: 1rem; }
+  .route-card {
+    position: sticky;
+    top: calc(84px + var(--i, 0) * 14px);
+    aspect-ratio: auto;
+    height: min(70svh, 470px);
+    margin-bottom: 1.4rem;
+    transform-origin: 50% 0;
+    box-shadow: 0 -10px 30px rgba(20, 14, 8, 0.18);
+    will-change: transform, filter;
+  }
+  .route-card:last-child { margin-bottom: 0; }
+  .motion .route-card[data-reveal] { opacity: 1; transition: none; }
+  .route-link { max-height: none; opacity: 1; }
   .journal { grid-template-columns: 1fr; grid-auto-rows: 220px; }
   .j-0, .j-3, .j-4 { grid-column: auto; grid-row: auto; }
   .countdown div { min-width: 0; flex: 1; }

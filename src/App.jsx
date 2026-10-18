@@ -6,7 +6,7 @@ import GalleryPage from './GalleryPage.jsx'
 import LegalPage from './LegalPage.jsx'
 import { usePath } from './router.jsx'
 import { LangProvider, LangToggle, useLang } from './i18n.jsx'
-import { CountUp, useHeaderState, useReveal, useSmoothScroll } from './motion.jsx'
+import { CountUp, useCardStack, useHeaderState, useReveal, useSmoothScroll } from './motion.jsx'
 
 const year = new Date().getFullYear()
 
@@ -308,6 +308,7 @@ function About() {
 
 function Routes() {
   const { u, tr } = useLang()
+  useCardStack('.routes .route-card')
   return (
     <section className="section section-sand" id="routes">
       <div className="wrap">
@@ -320,7 +321,7 @@ function Routes() {
         </div>
         <div className="routes">
           {club.routes.map((r, i) => (
-            <article key={r.place} className="route-card" data-reveal style={{ '--d': `${i * 0.08}s` }}>
+            <article key={r.place} className="route-card" data-reveal style={{ '--d': `${i * 0.08}s`, '--i': i }}>
               <Media image={r.image} scene={r.scene} seed={i + 11} label={r.place} />
               <div className="route-shade" />
               <div className="route-top">
