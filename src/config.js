@@ -11,8 +11,8 @@ export const club = {
   season: 2026,
 
   // WhatsApp number country code ke saath, bina + ya space ke (jaise 919876543210)
-  whatsapp: '910000000000',
-  phone: '+91 00000 00000',
+  whatsapp: '919685479518',
+  phone: '+91 96854 79518',
   email: 'hello@36rc.in',
   instagram: 'https://instagram.com/36rcofficial',
   instagramHandle: '@36rcofficial',
