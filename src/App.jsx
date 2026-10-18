@@ -3,6 +3,7 @@ import { club } from './config.js'
 import Scene from './Scene.jsx'
 import Intro from './Intro.jsx'
 import GalleryPage from './GalleryPage.jsx'
+import LegalPage from './LegalPage.jsx'
 import { usePath } from './router.jsx'
 import { LangProvider, LangToggle, useLang } from './i18n.jsx'
 import { CountUp, useHeaderState, useReveal, useSmoothScroll } from './motion.jsx'
@@ -535,10 +536,17 @@ function Footer() {
       </div>
       <div className="wrap footer-bottom">
         <span>© {year} {club.fullName} · {club.city}</span>
+        <nav className="footer-legal" aria-label="Legal">
+          <a href="/privacy">{u.privacy}</a>
+          <a href="/terms">{u.terms}</a>
+          <a href="/cookies">{u.cookies}</a>
+        </nav>
       </div>
     </footer>
   )
 }
+
+const LEGAL_PATHS = { '/privacy': 'privacy', '/terms': 'terms', '/cookies': 'cookies' }
 
 function Site() {
   const path = usePath()
@@ -550,6 +558,8 @@ function Site() {
       <Header key={path} />
       {path === '/gallery' ? (
         <GalleryPage />
+      ) : LEGAL_PATHS[path] ? (
+        <LegalPage page={LEGAL_PATHS[path]} />
       ) : (
         <main>
           <Hero />
