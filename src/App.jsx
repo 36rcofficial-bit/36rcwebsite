@@ -261,21 +261,6 @@ function Stats() {
   )
 }
 
-function Marquee() {
-  const { u } = useLang()
-  const places = [...new Set([...club.routes.map((r) => r.place), 'Mainpat', 'Sirpur', 'Bastar'])]
-  const row = places.map((p) => (
-    <span key={p} className="marquee-item">{p}<i aria-hidden="true">✦</i></span>
-  ))
-  return (
-    <div className="marquee" aria-label={`${u.placesWe}: ${places.join(', ')}`}>
-      <div className="marquee-track" aria-hidden="true">
-        {row}{row}
-      </div>
-    </div>
-  )
-}
-
 function About() {
   const { u, tr } = useLang()
   const a = club.about
@@ -506,7 +491,6 @@ function Site() {
       <Header />
       <main>
         <Hero />
-        <Marquee />
         <About />
         <Routes />
         <Journal />
