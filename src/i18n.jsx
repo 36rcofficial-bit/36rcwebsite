@@ -82,7 +82,6 @@ const UI = {
     joinMsg: (club, f) => `Hi ${club}! I'd like to join the club.\nName: ${f.name}\nWhatsApp: ${f.phone}\nBike: ${f.bike}\nCity: ${f.city}`,
     faqTitle: 'New to riding with us?',
     join: 'Join',
-    photos: 'Photos: Freepik',
     tapSkip: 'Tap to skip',
   },
   hi: {
@@ -123,7 +122,6 @@ const UI = {
     joinMsg: (club, f) => `Hi ${club}! Mujhe club join karna hai.\nNaam: ${f.name}\nWhatsApp: ${f.phone}\nBike: ${f.bike}\nCity: ${f.city}`,
     faqTitle: 'Humare saath naye ho?',
     join: 'Join',
-    photos: 'Photos: Freepik',
     tapSkip: 'Skip karne ke liye tap karo',
   },
 }

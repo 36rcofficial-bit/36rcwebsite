@@ -535,7 +535,6 @@ function Footer() {
       </div>
       <div className="wrap footer-bottom">
         <span>© {year} {club.fullName} · {club.city}</span>
-        <span>{u.photos}</span>
       </div>
     </footer>
   )
