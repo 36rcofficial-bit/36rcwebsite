@@ -250,8 +250,27 @@ img { max-width: 100%; display: block; }
 @keyframes barFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* Next ride card (hero ke upar right me) */
+/* Upcoming event ticker (header ke neeche) */
+.ticker {
+  position: absolute; z-index: 7; left: 0; right: 0; top: 78px;
+  display: block; overflow: hidden;
+  background: var(--accent); color: #fff;
+  padding-block: 0.55rem;
+  box-shadow: 0 10px 30px rgba(255, 102, 0, 0.25);
+}
+.ticker-track { display: flex; width: max-content; animation: tickerMove 38s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker-half { display: flex; flex: none; }
+.ticker-item { display: inline-flex; align-items: center; gap: 1.1rem; padding-right: 1.1rem; white-space: nowrap; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; }
+.ticker-item i { font-style: normal; font-size: 0.7rem; opacity: 0.75; }
+.ticker-item.is-tag { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+.ticker-item.is-tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: tickerBlink 1.4s ease-in-out infinite; }
+@keyframes tickerBlink { 50% { opacity: 0.25; } }
+.ticker-item.is-big { font-family: var(--display); font-weight: 900; font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; }
+@keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
 .hero-top {
-  position: absolute; z-index: 6; top: 96px; left: 0; right: 0;
+  position: absolute; z-index: 6; top: 134px; left: 0; right: 0;
   display: flex; justify-content: flex-end;
   pointer-events: none;
 }
@@ -917,7 +936,7 @@ html.drawer-open, html.drawer-open body { overflow: hidden; }
   .lang-toggle { margin-left: auto; }
   .burger { margin-left: 0; }
   .header-inner { gap: 0.8rem; }
-  .hero { padding-top: 96px; }
+  .hero { padding-top: 136px; }
   .hero-top { position: relative; top: auto; order: 2; justify-content: flex-start; padding-top: 0; padding-bottom: 1.2rem; }
   .ride-card { width: 100%; max-width: 400px; }
   .hero-inner { padding-bottom: 1.4rem; gap: 1.4rem; }

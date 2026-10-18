@@ -123,6 +123,32 @@ function useCountdown(target) {
   }
 }
 
+// Hero ke upar chalti patti (config.ticker)
+function Ticker() {
+  const { tr } = useLang()
+  const items = club.ticker?.items || []
+  if (!items.length) return null
+  const label = items.map((i) => tr(i)).join(' · ')
+  // Ek set ko 4 baar repeat (screen se chauda), phir uski 2 copies; -50% khiskane pe loop seamless
+  const half = (h) => (
+    <span className="ticker-half" key={h}>
+      {[0, 1, 2, 3].map((g) =>
+        items.map((i, k) => (
+          <span key={`${g}-${k}`} className={`ticker-item ${i.tag ? 'is-tag' : ''} ${i.big ? 'is-big' : ''}`}>
+            {tr(i)}
+            <i>✦</i>
+          </span>
+        )),
+      )}
+    </span>
+  )
+  return (
+    <a href={club.ticker.href} className="ticker hero-in" style={{ '--d': '0.9s' }} aria-label={label}>
+      <span className="ticker-track" aria-hidden="true">{half(0)}{half(1)}</span>
+    </a>
+  )
+}
+
 function NextRideCard() {
   const { u, tr } = useLang()
   const n = club.nextRide
@@ -205,6 +231,8 @@ function Hero() {
       {/* Orange-teal grade aur text ke liye shade */}
       <div className="hero-grade" />
       <div className="hero-shade" />
+
+      <Ticker />
 
       <div className="wrap hero-top">
         <NextRideCard />

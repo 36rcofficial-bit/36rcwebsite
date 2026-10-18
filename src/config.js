@@ -37,6 +37,16 @@ export const club = {
     ],
   },
 
+  // Hero ke upar chalti patti. Dates aane pe `text` badal do; khaali `items` = ticker band.
+  ticker: {
+    href: '/events',
+    items: [
+      { en: 'Upcoming event', hi: 'Aane wala event', tag: true },
+      { en: 'CGRM 2.0', hi: 'CGRM 2.0', big: true },
+      { en: 'Dates will be announced soon', hi: 'Dates jaldi announce hongi' },
+    ],
+  },
+
   // Agli ride: hero ke card me dikhti hai. Countdown `start` tak chalta hai (Indian time).
   nextRide: {
     title: 'Ride to Gour Ghat',
