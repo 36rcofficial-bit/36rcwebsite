@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { club } from './config.js'
 import Scene from './Scene.jsx'
 import Intro from './Intro.jsx'
+import { JoinDrawer, JoinForm, openJoin } from './JoinForm.jsx'
 import GalleryPage from './GalleryPage.jsx'
 import LegalPage from './LegalPage.jsx'
 import { usePath } from './router.jsx'
@@ -87,7 +88,7 @@ function Header() {
           ))}
         </nav>
         <LangToggle />
-        <a href="/#join" className="btn btn-light btn-sm header-cta">{u.joinClub}</a>
+        <a href="/#join" className="btn btn-light btn-sm header-cta" onClick={openJoin}>{u.joinClub}</a>
         <button className="burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
           <span /><span />
         </button>
@@ -95,7 +96,7 @@ function Header() {
       {open && (
         <nav className="drawer wrap">
           {[...links, ['/#join', u.joinClub]].map(([href, label]) => (
-            <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
+            <a key={href} href={href} onClick={(e) => { setOpen(false); if (href === '/#join') openJoin(e) }}>{label}</a>
           ))}
         </nav>
       )}
@@ -222,7 +223,7 @@ function Hero() {
         <div className="hero-side hero-in" style={{ '--d': '0.8s' }}>
           <p className="hero-text">{tr(h.text)}</p>
           <div className="hero-actions">
-            <a href="#join" className="btn btn-light">
+            <a href="#join" className="btn btn-light" onClick={openJoin}>
               {u.joinClub} <Icon name="arrow" className="btn-icon" />
             </a>
             <a href="#routes" className="btn btn-teal">{u.viewRides}</a>
@@ -415,27 +416,7 @@ function Gallery() {
 }
 
 function Join() {
-  const { u, lang } = useLang()
-  const [form, setForm] = useState({ name: '', phone: '', bike: '', city: '', website: '' })
-  const [sent, setSent] = useState(false)
-  const update = (e) => setForm({ ...form, [e.target.name]: e.target.value })
-
-  const submit = (e) => {
-    e.preventDefault()
-    // Sheet me entry (jawab ka intezaar nahi; text/plain taaki browser CORS preflight na kare)
-    if (club.sheetUrl) {
-      fetch(club.sheetUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        keepalive: true,
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ ...form, lang, source: 'website-join' }),
-      }).catch(() => {})
-    }
-    // WhatsApp isi click me kholna zaroori hai, warna popup block ho jaata hai
-    window.open(waLink(u.joinMsg(club.name, form)), '_blank', 'noopener')
-    setSent(true)
-  }
+  const { u } = useLang()
 
   return (
     <section className="join" id="join">
@@ -457,31 +438,9 @@ function Join() {
             <li><span>{u.base}</span>{club.city}</li>
           </ul>
         </div>
-        <form className="join-form" onSubmit={submit} data-reveal>
-          <h3>{u.joinForm(club.fullName)}</h3>
-          <div className="field">
-            <input id="f-name" name="name" value={form.name} onChange={update} required placeholder=" " />
-            <label htmlFor="f-name">{u.yourName}</label>
-          </div>
-          <div className="field">
-            <input id="f-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" pattern="[0-9+ ]{10,15}" value={form.phone} onChange={update} required placeholder=" " />
-            <label htmlFor="f-phone">{u.yourPhone}</label>
-          </div>
-          <div className="field">
-            <input id="f-bike" name="bike" value={form.bike} onChange={update} required placeholder=" " />
-            <label htmlFor="f-bike">{u.bike}</label>
-          </div>
-          <div className="field">
-            <input id="f-city" name="city" value={form.city} onChange={update} required placeholder=" " />
-            <label htmlFor="f-city">{u.city}</label>
-          </div>
-          {/* Bots ke liye chhupa field; insaan ise nahi dekhte */}
-          <input className="hp" name="website" value={form.website} onChange={update} tabIndex={-1} autoComplete="off" aria-hidden="true" />
-          <button type="submit" className="btn btn-accent btn-block">
-            {u.sendWa} <Icon name="arrow" className="btn-icon" />
-          </button>
-          {sent && <p className="join-sent" role="status">{u.joinSent}</p>}
-        </form>
+        <div data-reveal>
+          <JoinForm />
+        </div>
       </div>
     </section>
   )
@@ -557,6 +516,7 @@ function Site() {
     <>
       {path === '/' && <Intro />}
       <Header key={path} />
+      <JoinDrawer />
       {path === '/gallery' ? (
         <GalleryPage />
       ) : LEGAL_PATHS[path] ? (

@@ -6,7 +6,7 @@
  */
 
 const SHEET_NAME = 'Members'
-const HEADERS = ['Date & time', 'Name', 'WhatsApp', 'Bike', 'City', 'Language', 'Source']
+const HEADERS = ['Date & time', 'Name', 'WhatsApp', 'City', 'Gender', 'Bike brand', 'Model', 'Language', 'Source']
 
 function doPost(e) {
   try {
@@ -20,8 +20,10 @@ function doPost(e) {
       new Date(),
       clean(data.name, 80),
       clean(data.phone, 20),
-      clean(data.bike, 80),
       clean(data.city, 60),
+      clean(data.gender, 30),
+      clean(data.brand, 40),
+      clean(data.model, 60),
       clean(data.lang, 10),
       clean(data.source, 40),
     ])

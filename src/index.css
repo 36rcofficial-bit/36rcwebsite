@@ -551,6 +551,53 @@ img { max-width: 100%; display: block; }
   .legal-head { padding-top: 120px; }
 }
 
+/* Form: do fields ek line me, aur select boxes */
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.field select {
+  width: 100%; font: inherit;
+  padding: 1.35rem 2.2rem 0.55rem 1rem;
+  border: 1px solid var(--line); border-radius: 12px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23645b50' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 0.9rem center;
+  color: var(--ink); appearance: none; cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.field select:invalid { color: var(--ink-soft); }
+.field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(255, 102, 0, 0.12); }
+.join-form .field.field-select label { margin-top: 0; transform: translateY(-0.6rem); font-size: 0.72rem; color: var(--accent); font-weight: 700; letter-spacing: 0.06em; }
+
+/* Join side drawer */
+.jdrawer { position: fixed; inset: 0; z-index: 80; pointer-events: none; }
+.jdrawer.is-open { pointer-events: auto; }
+.jdrawer-scrim { position: absolute; inset: 0; background: rgba(8, 10, 9, 0.55); backdrop-filter: blur(4px); opacity: 0; transition: opacity 0.45s var(--ease); }
+.jdrawer.is-open .jdrawer-scrim { opacity: 1; }
+.jdrawer-panel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(460px, 100%);
+  background: var(--cream); color: var(--ink);
+  padding: max(28px, env(safe-area-inset-top, 0px)) max(28px, env(safe-area-inset-right, 0px)) max(28px, env(safe-area-inset-bottom, 0px)) 28px;
+  overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 1.2rem;
+  box-shadow: -30px 0 60px rgba(0, 0, 0, 0.25);
+  transform: translateX(104%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.jdrawer.is-open .jdrawer-panel { transform: none; }
+.jdrawer-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.jdrawer-head .eyebrow { margin-bottom: 0.6rem; }
+.jdrawer-title { font-size: clamp(2rem, 6vw, 2.6rem); }
+.jdrawer-close {
+  flex: none; width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid var(--line); background: #fff; cursor: pointer;
+  font-size: 1.5rem; line-height: 1; color: var(--ink);
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+.jdrawer-close:hover { background: var(--ink); color: #fff; transform: rotate(90deg); }
+.jdrawer-text { color: var(--ink-soft); font-size: 0.95rem; }
+.jdrawer .join-form.join-form-drawer { background: none; box-shadow: none; padding: 0; border-radius: 0; }
+.jdrawer-foot { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--ink-soft); }
+html.drawer-open, html.drawer-open body { overflow: hidden; }
+@media (max-width: 420px) { .field-row { grid-template-columns: 1fr; } }
+
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .join-sent { font-size: 0.85rem; color: #2f7a46; background: #e8f5ec; border-radius: 10px; padding: 0.7rem 0.9rem; margin-top: 0.4rem; }
 

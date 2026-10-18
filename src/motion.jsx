@@ -36,6 +36,7 @@ export function useSmoothScroll() {
 
     // Anchor links ko bhi smooth scroll
     const onClick = (e) => {
+      if (e.defaultPrevented) return
       const a = e.target.closest('a[href^="#"]')
       if (!a) return
       const target = document.querySelector(a.getAttribute('href'))
