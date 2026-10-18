@@ -47,6 +47,15 @@ export const club = {
     ],
   },
 
+  // Hero ka upar-right card: aane wala event. Dates aane pe when badal do.
+  heroEvent: {
+    title: 'CGRM 2.0',
+    season: { en: 'Season 2', hi: 'Season 2' },
+    place: { en: 'Chhattisgarh Riders Meet', hi: 'Chhattisgarh Riders Meet' },
+    when: { en: 'Dates will be announced soon', hi: 'Dates jaldi announce hongi' },
+    href: '/events/cgrm-season-1',
+  },
+
   // Agli ride: hero ke card me dikhti hai. Countdown `start` tak chalta hai (Indian time).
   nextRide: {
     title: 'Ride to Gour Ghat',

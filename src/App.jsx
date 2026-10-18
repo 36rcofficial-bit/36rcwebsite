@@ -149,6 +149,34 @@ function Ticker() {
   )
 }
 
+// Hero card: aane wala event (config.heroEvent)
+function EventCard() {
+  const { u, tr } = useLang()
+  const e = club.heroEvent
+  if (!e) return null
+  const msg = u.evMsg(club.name, e.title)
+  return (
+    <aside className="ride-card hero-in" style={{ '--d': '1s' }} aria-labelledby="event-card-title">
+      <div className="ride-card-head">
+        <span className="ride-card-label"><span className="pulse" aria-hidden="true" />{u.upcomingEvent}</span>
+        <span className="ride-card-date">{tr(e.season)}</span>
+      </div>
+      <h2 id="event-card-title" className="ride-card-title event-card-title">{e.title}</h2>
+      <p className="ride-card-meta">
+        {tr(e.place)}
+        <a href={e.href}>{u.details}</a>
+      </p>
+      <div className="ride-card-row">
+        <p className="event-card-when">{tr(e.when)}</p>
+        <a className="btn btn-accent btn-sm" href={`https://wa.me/${club.whatsapp}?text=${encodeURIComponent(msg)}`} target="_blank" rel="noreferrer">
+          {u.notifyMe} <Icon name="arrow" className="btn-icon" />
+        </a>
+      </div>
+    </aside>
+  )
+}
+
+// eslint-disable-next-line no-unused-vars
 function NextRideCard() {
   const { u, tr } = useLang()
   const n = club.nextRide
@@ -235,7 +263,7 @@ function Hero() {
       <Ticker />
 
       <div className="wrap hero-top">
-        <NextRideCard />
+        <EventCard />
       </div>
 
       <div className="wrap hero-inner">

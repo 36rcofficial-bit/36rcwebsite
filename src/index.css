@@ -303,6 +303,8 @@ img { max-width: 100%; display: block; }
 .ride-card-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 0.6rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.12); }
 .ride-card-count { display: flex; gap: 0.45rem; min-width: 0; font-size: 0.7rem; color: rgba(255, 255, 255, 0.5); font-variant-numeric: tabular-nums; }
 .ride-card-count strong { font-family: var(--display); font-weight: 800; font-size: 1.25rem; color: #fff; margin-right: 1px; }
+.event-card-title { font-size: 2.3rem; }
+.event-card-when { font-size: 0.82rem; font-weight: 600; color: rgba(255, 255, 255, 0.75); }
 .ride-card-row .btn { padding: 0.55rem 0.95rem; font-size: 0.8rem; flex: none; }
 
 /* Language toggle */
