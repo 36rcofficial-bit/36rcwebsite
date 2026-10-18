@@ -4,7 +4,7 @@ import Scene from './Scene.jsx'
 import Intro from './Intro.jsx'
 import { JoinDrawer, JoinForm, openJoin } from './JoinForm.jsx'
 import GalleryPage from './GalleryPage.jsx'
-import MeetPage from './MeetPage.jsx'
+import EventsPage, { EventDetail } from './EventsPage.jsx'
 import RidesPage, { RideDetail } from './RidesPage.jsx'
 import { slugOf } from './rides.js'
 import LegalPage from './LegalPage.jsx'
@@ -75,7 +75,7 @@ function Header() {
     ['/#about', u.nav.about],
     ['/#journal', u.nav.journal],
     ['/rides', u.ridesNav],
-    ['/riders-meet', u.meetNav],
+    ['/events', u.eventsNav],
     ['/gallery', u.nav.gallery],
     ['/#faq', u.nav.faq],
   ]
@@ -88,7 +88,7 @@ function Header() {
         </a>
         <nav className="header-links">
           {links.map(([href, label]) => (
-            <a key={href} href={href} aria-current={href === path ? 'page' : undefined}>{label}</a>
+            <a key={href} href={href} aria-current={href === path || (href !== '/' && path.startsWith(href + '/')) ? 'page' : undefined}>{label}</a>
           ))}
         </nav>
         <LangToggle />
@@ -494,7 +494,7 @@ function Footer() {
         <nav className="footer-links">
           <a href="/#routes">{u.nav.routes}</a>
           <a href="/rides">{u.ridesNav}</a>
-          <a href="/riders-meet">{u.meetNav}</a>
+          <a href="/events">{u.eventsNav}</a>
           <a href="/gallery">{u.nav.gallery}</a>
           <a href="/#join">{u.join}</a>
           <a href={club.instagram} target="_blank" rel="noreferrer">Instagram</a>
@@ -528,8 +528,10 @@ function Site() {
       <JoinDrawer />
       {path === '/gallery' ? (
         <GalleryPage />
-      ) : path === '/riders-meet' ? (
-        <MeetPage />
+      ) : path === '/events' ? (
+        <EventsPage />
+      ) : path.startsWith('/events/') ? (
+        <EventDetail key={path} slug={path.slice(8)} />
       ) : path === '/rides' ? (
         <RidesPage />
       ) : path.startsWith('/rides/') ? (

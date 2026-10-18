@@ -724,6 +724,40 @@ html.drawer-open, html.drawer-open body { overflow: hidden; }
   .rmore { grid-template-columns: 1fr; }
 }
 
+/* Exclusive Events list */
+.ev-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; padding-block: 3rem 6rem; }
+.ev-card {
+  position: relative; display: block; min-height: 420px;
+  border-radius: var(--radius); overflow: hidden; color: #fff; isolation: isolate;
+  background: var(--forest);
+}
+.ev-card.is-wide { grid-column: span 2; min-height: 480px; }
+.ev-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1.2s var(--ease); }
+.ev-card:hover img { transform: scale(1.05); }
+.ev-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(8, 10, 9, 0.88) 0%, rgba(8, 10, 9, 0.2) 55%, rgba(8, 10, 9, 0.4) 100%); }
+.ev-top { position: absolute; top: 1.2rem; left: 1.2rem; right: 1.2rem; display: flex; justify-content: space-between; gap: 0.6rem; }
+.ev-season { font-family: var(--display); font-weight: 800; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(8px); padding: 0.3rem 0.8rem; border-radius: 999px; }
+.ev-pill { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: 999px; background: var(--accent); color: #fff; }
+.ev-pill.ev-done { background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(8px); }
+.ev-body { position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(1.4rem, 3vw, 2.2rem); display: grid; gap: 0.5rem; }
+.ev-title { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 0.9; }
+.ev-tag { max-width: 52ch; color: rgba(255, 255, 255, 0.85); }
+.ev-meta { font-size: 0.82rem; color: rgba(255, 255, 255, 0.65); }
+.ev-more { margin-top: 0.4rem; font-weight: 700; color: var(--accent-soft); }
+.ev-hero-meta { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 1.4rem; }
+.ev-hero-meta span { display: grid; font-weight: 600; }
+.ev-hero-meta small { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); font-weight: 700; }
+.rmore.is-two { grid-template-columns: 1fr 1fr; }
+.rmore.is-two .rmore-item { aspect-ratio: 16 / 9; }
+.meet-photos.is-six .m-0 { grid-column: span 2; grid-row: span 2; }
+.meet-photos.is-six .m-5 { grid-column: span 4; }
+@media (max-width: 760px) {
+  .ev-list { grid-template-columns: 1fr; }
+  .rmore.is-two { grid-template-columns: 1fr; }
+  .ev-card.is-wide { grid-column: auto; min-height: 420px; }
+  .meet-photos.is-six .m-5 { grid-column: span 2; }
+}
+
 /* Riders Meet page */
 .meet { background: var(--paper); }
 .meet-lead { max-width: 52ch; }

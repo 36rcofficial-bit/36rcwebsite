@@ -77,21 +77,6 @@ export const club = {
     ],
   ],
 
-  // Riders Meet page (/riders-meet)
-  meet: {
-    hero: '/images/club-cgrm.webp',
-    photos: [
-      '/images/club-night.webp',
-      '/images/club-drift.webp',
-      '/images/club-start.webp',
-      '/images/club-startline.webp',
-      '/images/club-mound.webp',
-      '/images/club-team.webp',
-      '/images/club-stage.webp',
-      '/images/club-cgrm.webp',
-    ],
-  },
-
   // Full gallery page (/gallery). type: 'club' (club events) | 'ride' (rides & routes)
   galleryAll: [
     { image: '/images/club-night.webp', type: 'club', caption: { en: 'The 36RC family at CGRM night', hi: 'CGRM ki raat, 36RC family' } },
