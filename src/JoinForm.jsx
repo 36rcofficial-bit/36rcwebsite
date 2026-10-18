@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { club } from './config.js'
 import { useLang } from './i18n.jsx'
+import { slugOf } from './rides.js'
 
 export const BIKE_BRANDS = [
   'Royal Enfield', 'KTM', 'Bajaj', 'TVS', 'Hero', 'Honda', 'Yamaha', 'Suzuki',
@@ -153,7 +154,24 @@ export function JoinDrawer() {
         </div>
         <p className="jdrawer-text">{u.joinText}</p>
         {session > 0 && <JoinForm key={session} variant="drawer" autoFocus={open} />}
-        <p className="jdrawer-foot">{u.phone}: {club.phone} · {club.email}</p>
+        <ul className="jdrawer-perks">
+          {u.joinPerks.map((p) => <li key={p}>{p}</li>)}
+        </ul>
+        {club.routes[0] && (
+          <a href={`/rides/${slugOf(club.routes[0])}`} className="jdrawer-ride" onClick={() => setOpen(false)}>
+            <img src={club.routes[0].image} alt="" loading="lazy" />
+            <span>
+              <small>{u.nextRideShort} · {club.routes[0].date}</small>
+              <b>{club.routes[0].place}</b>
+              <em>{club.routes[0].km} km · {club.routes[0].days} {club.routes[0].days > 1 ? u.daysWord : u.day}</em>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+        )}
+        <div className="jdrawer-foot">
+          <a href={`https://wa.me/${club.whatsapp}`} target="_blank" rel="noreferrer" className="link-arrow">{u.waDirect}</a>
+          <span>{club.phone} · {club.email}</span>
+        </div>
       </aside>
     </div>
   )

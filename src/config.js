@@ -140,7 +140,9 @@ export const club = {
   routes: [
     {
       date: '24–25 Oct',
+      start: '2026-10-24',
       place: 'Gour Ghat',
+      about: { en: 'An epic two-day ride to the hidden gems of Chhattisgarh. Stay and costing shared on WhatsApp.', hi: 'Chhattisgarh ke hidden gems tak do din ki epic ride. Stay aur costing WhatsApp pe.' },
       route: { en: 'Raipur → Gour Ghat · ~350 km one way', hi: 'Raipur → Gour Ghat · ~350 km ek taraf' },
       km: 700,
       days: 2,
@@ -150,7 +152,9 @@ export const club = {
     },
     {
       date: '08–09 Nov',
+      start: '2026-11-08',
       place: 'Chitrakote Falls',
+      about: { en: "Through Jagdalpur to India's widest waterfall, with a night halt in Bastar.", hi: 'Jagdalpur hote hue Bharat ke sabse chaude waterfall tak, Bastar me night halt.' },
       route: 'Raipur → Jagdalpur → Chitrakote',
       km: 560,
       days: 2,
@@ -160,7 +164,9 @@ export const club = {
     },
     {
       date: '23 Nov',
+      start: '2026-11-23',
       place: 'Keshkal Ghaat',
+      about: { en: 'A one-day ghaat run with twisty climbs and a lunch stop in Kanker.', hi: 'Ek din ki ghaat ride, ghumavdaar chadhai aur Kanker me lunch.' },
       route: 'Raipur → Keshkal → Kanker',
       km: 340,
       days: 1,
@@ -170,7 +176,9 @@ export const club = {
     },
     {
       date: '13–14 Dec',
+      start: '2026-12-13',
       place: 'Amarkantak',
+      about: { en: 'Forest roads to the source of the Narmada. Longer days, for riders with some experience.', hi: 'Narmada ke udgam tak jungle ke raaste. Lambe din, thode experienced riders ke liye.' },
       route: 'Raipur → Bilaspur → Amarkantak',
       km: 520,
       days: 2,
@@ -178,6 +186,15 @@ export const club = {
       scene: 'forest',
       image: '/images/amarkantak.jpg',
     },
+  ],
+
+  // Pichli rides (Rides page pe "Completed" me). Upar wali rides ki date nikalne pe wo bhi apne aap Completed me aa jaati hain.
+  pastRides: [
+    { date: '05 Oct', start: '2026-10-05', place: 'Sirpur', route: 'Raipur → Sirpur', km: 180, days: 1, level: 'Easy', image: '/images/offroad.jpg' },
+    { date: '14 Sep', start: '2026-09-14', place: 'Mainpat', route: 'Raipur → Mainpat', km: 680, days: 2, level: 'Moderate', image: '/images/champaran.jpg' },
+    { date: '16–17 Aug', start: '2026-08-16', place: { en: 'Jagdalpur camp', hi: 'Jagdalpur camp' }, route: 'Raipur → Jagdalpur', km: 600, days: 2, level: 'Moderate', image: '/images/camping.jpg' },
+    { date: '19–20 Jul', start: '2026-07-19', place: 'Chitrakote Falls', route: 'Raipur → Jagdalpur → Chitrakote', km: 560, days: 2, level: 'Moderate', image: '/images/chitrakote.jpg' },
+    { date: '21 Jun', start: '2026-06-21', place: 'Keshkal Ghaat', route: 'Raipur → Keshkal → Kanker', km: 340, days: 1, level: 'Moderate', image: '/images/ghaat-road.jpg' },
   ],
 
   journal: [

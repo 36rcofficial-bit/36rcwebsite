@@ -4,6 +4,8 @@ import Scene from './Scene.jsx'
 import Intro from './Intro.jsx'
 import { JoinDrawer, JoinForm, openJoin } from './JoinForm.jsx'
 import GalleryPage from './GalleryPage.jsx'
+import RidesPage, { RideDetail } from './RidesPage.jsx'
+import { slugOf } from './rides.js'
 import LegalPage from './LegalPage.jsx'
 import { usePath } from './router.jsx'
 import { LangProvider, LangToggle, useLang } from './i18n.jsx'
@@ -70,8 +72,8 @@ function Header() {
   // "/#x" links: dusre page se bhi home ke section pe le jaate hain (router.jsx)
   const links = [
     ['/#about', u.nav.about],
-    ['/#routes', u.nav.routes],
     ['/#journal', u.nav.journal],
+    ['/rides', u.ridesNav],
     ['/gallery', u.nav.gallery],
     ['/#faq', u.nav.faq],
   ]
@@ -318,7 +320,10 @@ function Routes() {
             <p className="eyebrow" data-reveal>{u.upcoming}</p>
             <h2 className="display h2" data-reveal>{u.routesTitle}</h2>
           </div>
-          <p className="section-note" data-reveal>{u.routesNote}</p>
+          <div className="routes-side" data-reveal>
+            <p className="section-note">{u.routesNote}</p>
+            <a href="/rides" className="btn btn-dark btn-sm">{u.viewAllRides} <Icon name="arrow" className="btn-icon" /></a>
+          </div>
         </div>
         <div className="routes">
           {club.routes.map((r, i) => (
@@ -330,7 +335,7 @@ function Routes() {
                 <span className={`route-level level-${r.level.toLowerCase()}`}>{r.level}</span>
               </div>
               <div className="route-body">
-                <h3>{r.place}</h3>
+                <h3><a href={`/rides/${slugOf(r)}`} className="route-stretch">{r.place}</a></h3>
                 <p className="route-path">{tr(r.route)}</p>
                 <div className="route-meta">
                   <span>{r.km.toLocaleString('en-IN')} km</span>
@@ -486,6 +491,7 @@ function Footer() {
         </div>
         <nav className="footer-links">
           <a href="/#routes">{u.nav.routes}</a>
+          <a href="/rides">{u.ridesNav}</a>
           <a href="/gallery">{u.nav.gallery}</a>
           <a href="/#join">{u.join}</a>
           <a href={club.instagram} target="_blank" rel="noreferrer">Instagram</a>
@@ -519,6 +525,10 @@ function Site() {
       <JoinDrawer />
       {path === '/gallery' ? (
         <GalleryPage />
+      ) : path === '/rides' ? (
+        <RidesPage />
+      ) : path.startsWith('/rides/') ? (
+        <RideDetail key={path} slug={path.slice(7)} />
       ) : LEGAL_PATHS[path] ? (
         <LegalPage page={LEGAL_PATHS[path]} />
       ) : (
