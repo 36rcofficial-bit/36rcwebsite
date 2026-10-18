@@ -9,6 +9,7 @@ export function useSmoothScroll() {
   useEffect(() => {
     if (reduced()) return
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true })
+    window.__lenis = lenis // router isse page badalne pe scroll karta hai
     let raf = 0
 
     const items = () => document.querySelectorAll('[data-parallax]')
@@ -47,15 +48,16 @@ export function useSmoothScroll() {
     return () => {
       cancelAnimationFrame(raf)
       document.removeEventListener('click', onClick)
+      if (window.__lenis === lenis) delete window.__lenis
       lenis.destroy()
     }
   }, [])
 }
 
-// [data-reveal] elements viewport me aate hi `is-in` class paate hain
-export function useReveal() {
+// [data-reveal] elements viewport me aate hi `is-in` class paate hain. `key` badle (page badle) to dobara.
+export function useReveal(key) {
   useEffect(() => {
-    const els = document.querySelectorAll('[data-reveal]')
+    const els = document.querySelectorAll('[data-reveal]:not(.is-in)')
     if (reduced() || !('IntersectionObserver' in window)) {
       els.forEach((el) => el.classList.add('is-in'))
       return
@@ -74,7 +76,7 @@ export function useReveal() {
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [])
+  }, [key])
 }
 
 // "50,000+" jaisa number dikhte hi 0 se count-up

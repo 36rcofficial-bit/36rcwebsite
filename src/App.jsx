@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { club } from './config.js'
 import Scene from './Scene.jsx'
 import Intro from './Intro.jsx'
+import GalleryPage from './GalleryPage.jsx'
+import { usePath } from './router.jsx'
 import { LangProvider, LangToggle, useLang } from './i18n.jsx'
 import { CountUp, useHeaderState, useReveal, useSmoothScroll } from './motion.jsx'
 
@@ -62,33 +64,36 @@ function Header() {
   const { u } = useLang()
   const { solid, hidden } = useHeaderState()
   const [open, setOpen] = useState(false)
+  const path = window.location.pathname
+  // "/#x" links: dusre page se bhi home ke section pe le jaate hain (router.jsx)
   const links = [
-    ['#about', u.nav.about],
-    ['#routes', u.nav.routes],
-    ['#journal', u.nav.journal],
-    ['#faq', u.nav.faq],
+    ['/#about', u.nav.about],
+    ['/#routes', u.nav.routes],
+    ['/#journal', u.nav.journal],
+    ['/gallery', u.nav.gallery],
+    ['/#faq', u.nav.faq],
   ]
   const cls = ['header', solid || open ? 'header-solid' : '', hidden && !open ? 'header-hidden' : '']
   return (
     <header className={cls.join(' ')}>
       <div className="wrap header-inner">
-        <a href="#top" className="brand" aria-label={`${club.fullName} home`}>
+        <a href="/" className="brand" aria-label={`${club.fullName} home`}>
           <Logo className="brand-logo" eager />
         </a>
         <nav className="header-links">
           {links.map(([href, label]) => (
-            <a key={href} href={href}>{label}</a>
+            <a key={href} href={href} aria-current={href === path ? 'page' : undefined}>{label}</a>
           ))}
         </nav>
         <LangToggle />
-        <a href="#join" className="btn btn-light btn-sm header-cta">{u.joinClub}</a>
+        <a href="/#join" className="btn btn-light btn-sm header-cta">{u.joinClub}</a>
         <button className="burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
           <span /><span />
         </button>
       </div>
       {open && (
         <nav className="drawer wrap">
-          {[...links, ['#join', u.joinClub]].map(([href, label]) => (
+          {[...links, ['/#join', u.joinClub]].map(([href, label]) => (
             <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
           ))}
         </nav>
@@ -385,7 +390,10 @@ function Gallery() {
           <p className="eyebrow" data-reveal>{u.galleryEyebrow}</p>
           <h2 id="gallery-title" className="display h2" data-reveal>{u.galleryTitle}</h2>
         </div>
-        <a href={club.instagram} target="_blank" rel="noreferrer" className="link-arrow" data-reveal>{u.moreInsta}</a>
+        <div className="gallery-links" data-reveal>
+          <a href={club.instagram} target="_blank" rel="noreferrer" className="link-arrow">{u.moreInsta}</a>
+          <a href="/gallery" className="btn btn-dark btn-sm">{u.viewGallery} <Icon name="arrow" className="btn-icon" /></a>
+        </div>
       </div>
       {club.gallery.map((row, r) => (
         <div key={r} className={`gallery-row ${r % 2 ? 'is-reverse' : ''}`}>
@@ -511,11 +519,14 @@ function Footer() {
       </div>
       <div className="footer-shade" aria-hidden="true" />
       <div className="wrap footer-grid">
-        <p className="footer-tag">{u.footerTag}</p>
+        <div className="footer-tag">
+          <p className="footer-club">{club.fullName}</p>
+          <p className="footer-motto">Never stop exploring</p>
+        </div>
         <nav className="footer-links">
-          <a href="#routes">{u.nav.routes}</a>
-          <a href="#journal">{u.nav.journal}</a>
-          <a href="#join">{u.join}</a>
+          <a href="/#routes">{u.nav.routes}</a>
+          <a href="/gallery">{u.nav.gallery}</a>
+          <a href="/#join">{u.join}</a>
           <a href={club.instagram} target="_blank" rel="noreferrer">Instagram</a>
         </nav>
       </div>
@@ -531,21 +542,26 @@ function Footer() {
 }
 
 function Site() {
+  const path = usePath()
   useSmoothScroll()
-  useReveal()
+  useReveal(path)
   return (
     <>
-      <Intro />
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Routes />
-        <Journal />
-        <Gallery />
-        <Join />
-        <Faq />
-      </main>
+      {path === '/' && <Intro />}
+      <Header key={path} />
+      {path === '/gallery' ? (
+        <GalleryPage />
+      ) : (
+        <main>
+          <Hero />
+          <About />
+          <Routes />
+          <Journal />
+          <Gallery />
+          <Join />
+          <Faq />
+        </main>
+      )}
       <Footer />
     </>
   )

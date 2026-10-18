@@ -77,6 +77,26 @@ export const club = {
     ],
   ],
 
+  // Full gallery page (/gallery). type: 'club' (club events) | 'ride' (rides & routes)
+  galleryAll: [
+    { image: '/images/club-night.webp', type: 'club', caption: { en: 'The 36RC family at CGRM night', hi: 'CGRM ki raat, 36RC family' } },
+    { image: '/images/club-drift.webp', type: 'club', caption: { en: 'Kicking up dust at CGRM', hi: 'CGRM me dhool udate hue' } },
+    { image: '/images/club-helmet.webp', type: 'club', caption: { en: 'A helmet full of ride stickers', hi: 'Ride stickers se bhara helmet' } },
+    { image: '/images/ghaat-road.jpg', type: 'ride', caption: { en: 'Keshkal ghaat climb', hi: 'Keshkal ghaat ki chadhai' } },
+    { image: '/images/club-startline.webp', type: 'club', caption: { en: 'Riders on the start line', hi: 'Start line pe riders' } },
+    { image: '/images/chitrakote.jpg', type: 'ride', caption: { en: 'Chitrakote in full flow', hi: 'Chitrakote poore uphaan pe' } },
+    { image: '/images/club-mound.webp', type: 'club', caption: { en: 'Over the mound', hi: 'Mitti ke dher ke upar' } },
+    { image: '/images/club-team.webp', type: 'club', caption: { en: 'Crew on the ground', hi: 'Ground pe hamari crew' } },
+    { image: '/images/offroad.jpg', type: 'ride', caption: { en: 'Dirt trail to Sirpur', hi: 'Sirpur ka kachcha raasta' } },
+    { image: '/images/club-cgrm.webp', type: 'club', caption: { en: 'Chhattisgarh Riders Meet 2024', hi: 'Chhattisgarh Riders Meet 2024' } },
+    { image: '/images/camping.jpg', type: 'ride', caption: { en: 'Camp night near Jagdalpur', hi: 'Jagdalpur ke paas camp night' } },
+    { image: '/images/club-start.webp', type: 'club', caption: { en: 'Dirt track start', hi: 'Dirt track start' } },
+    { image: '/images/champaran.jpg', type: 'ride', caption: { en: 'Misty morning, Mainpat', hi: 'Mainpat ki dhundh bhari subah' } },
+    { image: '/images/club-stage.webp', type: 'club', caption: { en: 'On stage, together', hi: 'Stage pe, sab saath' } },
+    { image: '/images/sunset.jpg', type: 'ride', caption: { en: 'Sunset halt', hi: 'Sunset pe ruke' } },
+    { image: '/images/amarkantak.jpg', type: 'ride', caption: { en: 'Forest roads to Amarkantak', hi: 'Amarkantak ke jungle raaste' } },
+  ],
+
   // Join section ke peeche wali photo
   joinImage: '/images/club-team.webp',
 
