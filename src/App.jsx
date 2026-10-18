@@ -376,6 +376,34 @@ function Journal() {
   )
 }
 
+function Gallery() {
+  const { u } = useLang()
+  return (
+    <section className="gallery" id="gallery" aria-labelledby="gallery-title">
+      <div className="wrap section-head gallery-head">
+        <div>
+          <p className="eyebrow" data-reveal>{u.galleryEyebrow}</p>
+          <h2 id="gallery-title" className="display h2" data-reveal>{u.galleryTitle}</h2>
+        </div>
+        <a href={club.instagram} target="_blank" rel="noreferrer" className="link-arrow" data-reveal>{u.moreInsta}</a>
+      </div>
+      {club.gallery.map((row, r) => (
+        <div key={r} className={`gallery-row ${r % 2 ? 'is-reverse' : ''}`}>
+          <div className="gallery-track">
+            {[0, 1].map((copy) =>
+              row.map((p, i) => (
+                <figure key={`${copy}-${i}`} className={`gallery-item ${p.size ? `is-${p.size}` : ''}`} aria-hidden={copy === 1}>
+                  <img src={p.image} alt={copy === 1 ? '' : p.alt} loading="lazy" />
+                </figure>
+              )),
+            )}
+          </div>
+        </div>
+      ))}
+    </section>
+  )
+}
+
 function Join() {
   const { u } = useLang()
   const [form, setForm] = useState({ name: '', bike: '', city: '' })
@@ -494,6 +522,7 @@ function Site() {
         <About />
         <Routes />
         <Journal />
+        <Gallery />
         <Join />
         <Faq />
       </main>

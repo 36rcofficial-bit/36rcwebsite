@@ -18,7 +18,10 @@ export function useSmoothScroll() {
         const speed = parseFloat(el.dataset.parallax) || 0.15
         const box = el.parentElement.getBoundingClientRect()
         if (box.bottom < -200 || box.top > vh + 200) return
-        const offset = (box.top + box.height / 2 - vh / 2) * -speed
+        // Photo ki extra jagah se zyada mat khisakao, warna kinare pe khaali patti dikhti hai
+        const extra = Math.max(0, (el.offsetHeight * 1.15 - box.height) / 2)
+        const raw = (box.top + box.height / 2 - vh / 2) * -speed
+        const offset = Math.max(-extra, Math.min(extra, raw))
         el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0) scale(1.15)`
       })
     }

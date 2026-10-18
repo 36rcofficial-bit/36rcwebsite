@@ -416,6 +416,32 @@ img { max-width: 100%; display: block; }
 .journal-item strong { font-size: 1.05rem; }
 .journal-item span { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); }
 
+/* Gallery: do patti, ulti dishaon me dheere chalti */
+.gallery { background: var(--paper); padding-block: clamp(5rem, 10vw, 8rem); overflow: hidden; }
+.gallery-head { margin-bottom: 2.5rem; }
+.gallery-row { overflow: hidden; }
+.gallery-row + .gallery-row { margin-top: 1rem; }
+.gallery-track {
+  display: flex; gap: 1rem; width: max-content;
+  animation: galleryScroll 70s linear infinite;
+}
+.gallery-row.is-reverse .gallery-track { animation-direction: reverse; animation-duration: 80s; }
+.gallery-row:hover .gallery-track { animation-play-state: paused; }
+@keyframes galleryScroll { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 0.5rem)); } }
+.gallery-item {
+  position: relative; margin: 0; flex: none;
+  height: clamp(200px, 24vw, 300px);
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--sand);
+}
+.gallery-item.is-wide { aspect-ratio: 16 / 10; }
+.gallery-item.is-tall { aspect-ratio: 3 / 4; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s var(--ease), filter 0.6s; }
+.gallery-item:hover img { transform: scale(1.06); }
+.gallery-row:hover .gallery-item:not(:hover) img { filter: brightness(0.75) saturate(0.85); }
+
 /* Join */
 .join { position: relative; overflow: hidden; color: #fff; padding-block: clamp(5rem, 11vw, 9rem); background: var(--forest); }
 .join-media { position: absolute; inset: 0; }

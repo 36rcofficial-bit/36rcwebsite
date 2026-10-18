@@ -55,6 +55,26 @@ export const club = {
     { value: '5', label: { en: 'Seasons', hi: 'Seasons' } },
   ],
 
+  // Gallery: do patti me dheere chalti photos. size: 'wide' | 'tall' | normal
+  gallery: [
+    [
+      { image: '/images/club-night.webp', alt: '36RC family at CGRM night', size: 'wide' },
+      { image: '/images/club-mound.webp', alt: 'Rider over a dirt mound' },
+      { image: '/images/club-helmet.webp', alt: 'Helmet with 36RC ride stickers', size: 'tall' },
+      { image: '/images/club-startline.webp', alt: 'Riders on the start line', size: 'wide' },
+      { image: '/images/chitrakote.jpg', alt: 'Chitrakote waterfall' },
+      { image: '/images/club-team.webp', alt: '36RC crew with bikes', size: 'wide' },
+    ],
+    [
+      { image: '/images/club-drift.webp', alt: 'Rider kicking up dust', size: 'wide' },
+      { image: '/images/ghaat-road.jpg', alt: 'Riders on a ghaat road' },
+      { image: '/images/club-cgrm.webp', alt: 'Riders celebrating at CGRM 2024', size: 'wide' },
+      { image: '/images/camping.jpg', alt: 'Motorcycle camp' },
+      { image: '/images/club-start.webp', alt: 'Dirt track start at CGRM', size: 'wide' },
+      { image: '/images/club-stage.webp', alt: 'Club on stage at CGRM' },
+    ],
+  ],
+
   // Join section ke peeche wali photo
   joinImage: '/images/club-team.webp',
 
