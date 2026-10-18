@@ -14,6 +14,8 @@ export const club = {
   whatsapp: '919685479518',
   phone: '+91 96854 79518',
   email: '36rcofficials@gmail.com',
+  // Google Sheet ka Web App URL (setup: google-sheet/README.md). Khaali ho to sirf WhatsApp khulta hai.
+  sheetUrl: '',
   instagram: 'https://instagram.com/36rcofficial',
   instagramHandle: '@36rcofficial',
 

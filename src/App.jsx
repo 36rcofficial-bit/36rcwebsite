@@ -405,13 +405,26 @@ function Gallery() {
 }
 
 function Join() {
-  const { u } = useLang()
-  const [form, setForm] = useState({ name: '', bike: '', city: '' })
+  const { u, lang } = useLang()
+  const [form, setForm] = useState({ name: '', phone: '', bike: '', city: '', website: '' })
+  const [sent, setSent] = useState(false)
   const update = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
   const submit = (e) => {
     e.preventDefault()
+    // Sheet me entry (jawab ka intezaar nahi; text/plain taaki browser CORS preflight na kare)
+    if (club.sheetUrl) {
+      fetch(club.sheetUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        keepalive: true,
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ ...form, lang, source: 'website-join' }),
+      }).catch(() => {})
+    }
+    // WhatsApp isi click me kholna zaroori hai, warna popup block ho jaata hai
     window.open(waLink(u.joinMsg(club.name, form)), '_blank', 'noopener')
+    setSent(true)
   }
 
   return (
@@ -441,6 +454,10 @@ function Join() {
             <label htmlFor="f-name">{u.yourName}</label>
           </div>
           <div className="field">
+            <input id="f-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" pattern="[0-9+ ]{10,15}" value={form.phone} onChange={update} required placeholder=" " />
+            <label htmlFor="f-phone">{u.yourPhone}</label>
+          </div>
+          <div className="field">
             <input id="f-bike" name="bike" value={form.bike} onChange={update} required placeholder=" " />
             <label htmlFor="f-bike">{u.bike}</label>
           </div>
@@ -448,9 +465,12 @@ function Join() {
             <input id="f-city" name="city" value={form.city} onChange={update} required placeholder=" " />
             <label htmlFor="f-city">{u.city}</label>
           </div>
+          {/* Bots ke liye chhupa field; insaan ise nahi dekhte */}
+          <input className="hp" name="website" value={form.website} onChange={update} tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <button type="submit" className="btn btn-accent btn-block">
             {u.sendWa} <Icon name="arrow" className="btn-icon" />
           </button>
+          {sent && <p className="join-sent" role="status">{u.joinSent}</p>}
         </form>
       </div>
     </section>
